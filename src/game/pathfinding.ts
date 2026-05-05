@@ -1,10 +1,14 @@
 import type { GameState, Tile } from './types';
 
-const dirs = [
-  [1, 0],
-  [-1, 0],
-  [0, 1],
+const railDirs = [
+  [-1, -1],
   [0, -1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
 ];
 
 export function tileAt(state: GameState, x: number, y: number): Tile | undefined {
@@ -13,7 +17,7 @@ export function tileAt(state: GameState, x: number, y: number): Tile | undefined
 }
 
 export function neighbors(state: GameState, tile: Tile): Tile[] {
-  return dirs
+  return railDirs
     .map(([dx, dy]) => tileAt(state, tile.x + dx, tile.y + dy))
     .filter((candidate): candidate is Tile => Boolean(candidate));
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyTool, createGame, tickGame } from './simulation';
+import { applyTool, applyToolLine, createGame, tickGame } from './simulation';
 import { findRailPath, tileAt } from './pathfinding';
 
 describe('simulation', () => {
@@ -28,6 +28,15 @@ describe('simulation', () => {
     game = tickGame(game, 80);
     expect(game.stations.some((station) => station.x === rail.x && station.y === rail.y)).toBe(true);
     expect(game.clock.tick).toBe(80);
+  });
+
+  it('treats diagonal rail as a first-class 8-way connection', () => {
+    let game = createGame('diagonal-rail-test');
+    game = applyToolLine(game, 'rail', 30, 30, 34, 34);
+    const start = tileAt(game, 30, 30)!;
+    const goal = tileAt(game, 34, 34)!;
+    const path = findRailPath(game, start, goal).map((tile) => `${tile.x},${tile.y}`);
+    expect(path).toEqual(['30,30', '31,31', '32,32', '33,33', '34,34']);
   });
 
   it('builds v1 special infrastructure procedurally', () => {

@@ -96,11 +96,16 @@ export interface MultiplayerSession {
 
 export interface TileSprite {
   filename: string;
+  gfxId: string;
+  slot: string;
   label: string;
   category: string;
   transport: string;
   terrain: string;
   connections: Direction[];
+  slope: string;
+  orientation: string;
+  notes: string;
   waterOnly: boolean;
   width: number;
   height: number;

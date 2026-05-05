@@ -1,36 +1,45 @@
 import { buildingName, stationName } from './names';
 import { Rng } from './random';
+import { linePoints, linePoints8 } from './geometry';
 import { findRailPath, tileAt } from './pathfinding';
 import type { GameState, Overlay, Station, Tile, Tool, Train, Zone } from './types';
 
-const MAP_W = 52;
-const MAP_H = 52;
+const MAP_W = 300;
+const MAP_H = 300;
 const DAY_MONTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+interface TownCenter {
+  x: number;
+  y: number;
+  power: number;
+  rank: number;
+}
 
 export function createGame(seed = `tycoon-${Date.now()}`): GameState {
   const rng = new Rng(seed);
   const tiles: Tile[] = [];
-  const centers = Array.from({ length: 4 }, () => ({ x: rng.int(8, MAP_W - 9), y: rng.int(8, MAP_H - 9), power: rng.int(5, 9) }));
+  const centers = createTownCenters(rng);
   for (let y = 0; y < MAP_H; y += 1) {
     for (let x = 0; x < MAP_W; x += 1) {
       const nx = x / MAP_W - 0.5;
       const ny = y / MAP_H - 0.5;
-      const island = 0.48 - Math.sqrt(nx * nx + ny * ny) + fbm(x, y, seed) * 0.28;
-      let terrain: Tile['terrain'] = island < 0.02 ? 'water' : island < 0.09 ? 'coast' : rng.chance(0.08) ? 'forest' : 'farm';
+      const island = 0.52 - Math.sqrt(nx * nx + ny * ny) + fbm(x, y, seed) * 0.17;
+      const farmPatch = fbm(x + 1800, y - 900, `${seed}:farms`);
+      let terrain: Tile['terrain'] = island < 0.01 ? 'water' : island < 0.065 ? 'coast' : rng.chance(0.09) ? 'forest' : farmPatch > 0.1 || (farmPatch > -0.04 && rng.chance(0.42)) ? 'farm' : 'land';
       let zone: Zone = 'none';
       let development = 0;
       for (const center of centers) {
         const dist = Math.hypot(center.x - x, center.y - y);
-        if (dist < center.power && terrain !== 'water') {
-          development = Math.max(development, Math.round((1 - dist / center.power) * 3));
-          zone = development > 2 ? 'commercial' : rng.chance(0.68) ? 'residential' : 'commercial';
+        if (dist < center.power) {
           terrain = 'land';
+          const intensity = Math.max(0, 1 - dist / center.power);
+          const highStreet = Math.abs(x - center.x) <= 1 || Math.abs(y - center.y) <= 1;
+          const maxDevelopment = center.rank <= 2 ? 5 : 4;
+          development = Math.max(development, Math.min(maxDevelopment, Math.round(1 + intensity * (highStreet ? 3.5 : 2.5))));
+          if (dist < center.power * 0.2) zone = rng.chance(0.7) ? 'commercial' : 'residential';
+          else if (dist < center.power * 0.52) zone = rng.chance(0.42) ? 'commercial' : 'residential';
+          else zone = rng.chance(0.84) ? 'residential' : 'none';
         }
-      }
-      if (terrain !== 'water' && zone === 'none' && rng.chance(0.035)) {
-        zone = 'industrial';
-        terrain = 'land';
-        development = rng.int(1, 2);
       }
       tiles.push(makeTile(rng, x, y, terrain, zone, development));
     }
@@ -53,8 +62,28 @@ export function createGame(seed = `tycoon-${Date.now()}`): GameState {
     log: ['Company founded with a long-term development loan.'],
     multiplayer: { mode: 'solo', worldId: worldId(seed), peers: [] },
   };
-  seedStarterRail(state, rng);
+  seedIndustrialDistricts(state, centers, rng);
+  seedTownRoads(state, centers);
+  seedStarterRail(state, rng, centers);
   return state;
+}
+
+function createTownCenters(rng: Rng): TownCenter[] {
+  const centers: TownCenter[] = [];
+  const targetCenters = Math.round(8 * (MAP_W / 112));
+  let attempts = 0;
+  while (centers.length < targetCenters && attempts < 3000) {
+    attempts += 1;
+    const candidate = {
+      x: rng.int(14, MAP_W - 15),
+      y: rng.int(14, MAP_H - 15),
+      power: rng.int(5, centers.length < 2 ? 9 : 7),
+      rank: centers.length + 1,
+    };
+    if (centers.some((center) => Math.hypot(center.x - candidate.x, center.y - candidate.y) < center.power + candidate.power + 9)) continue;
+    centers.push(candidate);
+  }
+  return centers;
 }
 
 function makeTile(rng: Rng, x: number, y: number, terrain: Tile['terrain'], zone: Zone, development: number): Tile {
@@ -75,14 +104,101 @@ function makeTile(rng: Rng, x: number, y: number, terrain: Tile['terrain'], zone
   };
 }
 
-function seedStarterRail(state: GameState, rng: Rng): void {
-  const towns = state.tiles.filter((tile) => tile.development >= 2 && tile.terrain !== 'water').slice(0, 2);
+function seedTownRoads(state: GameState, centers: TownCenter[]): void {
+  const rng = new Rng(`${state.seed}:roads`);
+  for (const center of centers) {
+    const radius = Math.max(4, Math.floor(center.power * 0.72));
+    const verticals = irregularOffsets(rng, radius).map((offset) => center.x + offset);
+    const horizontals = irregularOffsets(rng, radius).map((offset) => center.y + offset);
+    for (const x of verticals) {
+      const slackTop = rng.int(0, 2);
+      const slackBottom = rng.int(0, 2);
+      for (let y = center.y - radius + slackTop; y <= center.y + radius - slackBottom; y += 1) placeRoadTile(state, x, y, 'vertical');
+    }
+    for (const y of horizontals) {
+      const slackLeft = rng.int(0, 2);
+      const slackRight = rng.int(0, 2);
+      for (let x = center.x - radius + slackLeft; x <= center.x + radius - slackRight; x += 1) placeRoadTile(state, x, y, 'horizontal');
+    }
+  }
+  for (const [a, b] of regionalRoadPairs(centers)) {
+    layRoadLine(state, a.x, a.y, b.x, b.y);
+  }
+}
+
+function regionalRoadPairs(centers: TownCenter[]): Array<[TownCenter, TownCenter]> {
+  const primary = centers.slice(0, Math.min(9, centers.length));
+  const connected = primary.slice(0, 1);
+  const remaining = primary.slice(1);
+  const pairs: Array<[TownCenter, TownCenter]> = [];
+  while (remaining.length > 0 && pairs.length < 7) {
+    let best: { from: TownCenter; to: TownCenter; index: number; distance: number } | undefined;
+    for (const from of connected) {
+      for (let index = 0; index < remaining.length; index += 1) {
+        const to = remaining[index];
+        const distance = Math.hypot(from.x - to.x, from.y - to.y);
+        if (!best || distance < best.distance) best = { from, to, index, distance };
+      }
+    }
+    if (!best || (best.distance > 120 && pairs.length >= 4)) break;
+    pairs.push([best.from, best.to]);
+    connected.push(best.to);
+    remaining.splice(best.index, 1);
+  }
+  return pairs;
+}
+
+function irregularOffsets(rng: Rng, radius: number): number[] {
+  const offsets = [0];
+  for (let offset = rng.int(3, 5); offset < radius; offset += rng.int(4, 6)) offsets.push(offset);
+  for (let offset = -rng.int(3, 5); Math.abs(offset) < radius; offset -= rng.int(4, 6)) offsets.push(offset);
+  return offsets.sort((a, b) => a - b);
+}
+
+function seedStarterRail(state: GameState, rng: Rng, centers: TownCenter[]): void {
+  const towns = centers
+    .map((center) => tileAt(state, center.x, center.y))
+    .filter((tile): tile is Tile => tile !== undefined && tile.terrain !== 'water')
+    .sort((a, b) => b.development - a.development);
   if (towns.length < 2) return;
   const [a, b] = towns;
-  layLine(state, a.x, a.y, b.x, b.y, 'rail', 0);
+  layLine(state, a.x, a.y, b.x, b.y, 'rail', 0, true);
   placeStation(state, a.x, a.y, rng);
   placeStation(state, b.x, b.y, rng);
   addTrain(state);
+}
+
+function seedIndustrialDistricts(state: GameState, centers: TownCenter[], rng: Rng): void {
+  const offsets = [
+    { x: 10, y: 5 },
+    { x: -10, y: 6 },
+    { x: 7, y: -11 },
+    { x: -7, y: -10 },
+    { x: 13, y: -3 },
+    { x: -13, y: 2 },
+  ];
+  for (const center of centers) {
+    if (!rng.chance(center.rank <= 8 ? 0.72 : 0.38)) continue;
+    const base = rng.pick(offsets);
+    const ox = center.x + base.x + rng.int(-3, 3);
+    const oy = center.y + base.y + rng.int(-3, 3);
+    const width = rng.int(2, 4);
+    const height = rng.int(2, 3);
+    for (let y = oy; y < oy + height; y += 1) {
+      for (let x = ox; x < ox + width; x += 1) {
+        const tile = tileAt(state, x, y);
+        if (!tile || tile.terrain === 'water' || tile.terrain === 'coast' || !rng.chance(0.82)) continue;
+        tile.terrain = 'land';
+        tile.zone = 'industrial';
+        tile.overlay = 'none';
+        tile.development = rng.int(2, 3);
+        tile.passengers = 0;
+        tile.cargo = tile.development * rng.int(12, 22);
+        tile.landValue = Math.max(tile.landValue, 1200 + tile.development * 700);
+        tile.buildingName = buildingName(rng, 'industrial');
+      }
+    }
+  }
 }
 
 export function applyTool(state: GameState, tool: Tool, x: number, y: number): GameState {
@@ -146,18 +262,65 @@ export function applyTool(state: GameState, tool: Tool, x: number, y: number): G
   return next;
 }
 
-function layLine(state: GameState, ax: number, ay: number, bx: number, by: number, overlay: 'rail' | 'road', cost: number): void {
-  let x = ax;
-  let y = ay;
-  while (x !== bx || y !== by) {
-    const tile = tileAt(state, x, y);
-    if (tile && tile.terrain !== 'water') tile.overlay = overlayWithCrossing(tile.overlay, overlay);
-    if (x !== bx) x += Math.sign(bx - x);
-    else y += Math.sign(by - y);
+export function applyToolLine(state: GameState, tool: Tool, ax: number, ay: number, bx: number, by: number): GameState {
+  if (tool !== 'rail' && tool !== 'road' && tool !== 'elevatedRail' && tool !== 'bridge' && tool !== 'monorail') return applyTool(state, tool, bx, by);
+  const next = cloneState(state);
+  const overlay = tool === 'road' ? 'road' : 'rail';
+  let cost = 0;
+  const points = tool === 'road' ? linePoints(ax, ay, bx, by) : linePoints8(ax, ay, bx, by);
+  for (const point of points) {
+    const tile = tileAt(next, point.x, point.y);
+    if (!tile) continue;
+    if (tile.terrain === 'water' && tool !== 'rail' && tool !== 'bridge') continue;
+    if (tool === 'elevatedRail') tile.height = 1;
+    tile.overlay = overlayWithCrossing(tile.overlay, overlay);
+    if (tool === 'elevatedRail' || tool === 'bridge' || tool === 'monorail') tile.overlay = tool;
+    cost += tile.terrain === 'water' || tool === 'bridge' ? 70_000 : tool === 'elevatedRail' ? 54_000 : tool === 'monorail' ? 62_000 : tool === 'rail' ? 22_000 : 12_000;
   }
-  const end = tileAt(state, bx, by);
-  if (end) end.overlay = overlayWithCrossing(end.overlay, overlay);
+  if (cost > 0) charge(next, cost, `${tool} corridor`);
+  return next;
+}
+
+function layLine(state: GameState, ax: number, ay: number, bx: number, by: number, overlay: 'rail' | 'road', cost: number, allowWater = false): void {
+  const points = overlay === 'rail' ? linePoints8(ax, ay, bx, by) : linePoints(ax, ay, bx, by);
+  for (const point of points) {
+    const tile = tileAt(state, point.x, point.y);
+    if (tile && (tile.terrain !== 'water' || allowWater)) tile.overlay = overlayWithCrossing(tile.overlay, overlay);
+  }
   if (cost > 0) charge(state, cost, 'Autolined corridor');
+}
+
+function layRoadLine(state: GameState, ax: number, ay: number, bx: number, by: number): void {
+  let previous = { x: ax, y: ay };
+  for (const point of linePoints(ax, ay, bx, by)) {
+    const axis = Math.abs(point.x - previous.x) > 0 ? 'horizontal' : 'vertical';
+    placeRoadTile(state, point.x, point.y, axis);
+    previous = point;
+  }
+}
+
+function placeRoadTile(state: GameState, x: number, y: number, axis: 'horizontal' | 'vertical', avoidParallel = false): void {
+  const tile = tileAt(state, x, y);
+  if (!tile || tile.terrain === 'water') return;
+  if (avoidParallel && wouldCreateParallelRoad(state, x, y, axis)) return;
+  tile.overlay = overlayWithCrossing(tile.overlay, 'road');
+  tile.zone = 'none';
+  tile.development = 0;
+  tile.passengers = 0;
+  tile.cargo = 0;
+  tile.buildingName = undefined;
+}
+
+function wouldCreateParallelRoad(state: GameState, x: number, y: number, axis: 'horizontal' | 'vertical'): boolean {
+  if (tileAt(state, x, y)?.overlay === 'road') return false;
+  const sides = axis === 'vertical' ? [[-1, 0], [1, 0]] : [[0, -1], [0, 1]];
+  return sides.some(([dx, dy]) => {
+    const side = tileAt(state, x + dx, y + dy);
+    if (!side || side.overlay !== 'road') return false;
+    const a = axis === 'vertical' ? tileAt(state, x + dx, y + dy - 1) : tileAt(state, x + dx - 1, y + dy);
+    const b = axis === 'vertical' ? tileAt(state, x + dx, y + dy + 1) : tileAt(state, x + dx + 1, y + dy);
+    return a?.overlay === 'road' || b?.overlay === 'road';
+  });
 }
 
 function overlayWithCrossing(current: Overlay, next: 'rail' | 'road'): Overlay {
@@ -238,7 +401,7 @@ function addTrain(state: GameState): void {
 }
 
 export function tickGame(state: GameState, ticks = 1): GameState {
-  let next = cloneState(state);
+  let next = cloneRuntimeState(state);
   for (let i = 0; i < ticks; i += 1) {
     if (next.clock.paused) break;
     next.clock.tick += 1;
@@ -257,6 +420,7 @@ function advanceHour(state: GameState): void {
   const loanInterest = state.company.loans.reduce((sum, loan) => sum + loan.principal * loan.interestRate / 365, 0);
   state.company.cash -= Math.round(dailyMaintenance + loanInterest);
   state.company.lifetimeExpenses += Math.round(dailyMaintenance + loanInterest);
+  state.tiles = state.tiles.map((tile) => ({ ...tile }));
   developAroundStations(state);
   state.clock.day += 1;
   const leap = state.clock.year % 4 === 0;
@@ -358,7 +522,20 @@ function zoneTile(tile: Tile, zone: 'residential' | 'commercial' | 'industrial' 
 }
 
 function tilesInRadius(state: GameState, x: number, y: number, radius: number): Tile[] {
-  return state.tiles.filter((tile) => Math.hypot(tile.x - x, tile.y - y) <= radius);
+  const tiles: Tile[] = [];
+  const radiusSq = radius * radius;
+  const minX = Math.max(0, Math.floor(x - radius));
+  const maxX = Math.min(state.width - 1, Math.ceil(x + radius));
+  const minY = Math.max(0, Math.floor(y - radius));
+  const maxY = Math.min(state.height - 1, Math.ceil(y + radius));
+  for (let ty = minY; ty <= maxY; ty += 1) {
+    for (let tx = minX; tx <= maxX; tx += 1) {
+      if ((tx - x) * (tx - x) + (ty - y) * (ty - y) > radiusSq) continue;
+      const tile = tileAt(state, tx, ty);
+      if (tile) tiles.push(tile);
+    }
+  }
+  return tiles;
 }
 
 function charge(state: GameState, amount: number, reason: string): void {
@@ -406,11 +583,26 @@ export function saveGame(state: GameState): void {
 
 export function loadGame(): GameState | undefined {
   const raw = localStorage.getItem('tycoon:last-save');
-  return raw ? JSON.parse(raw) as GameState : undefined;
+  const game = raw ? JSON.parse(raw) as GameState : undefined;
+  return game && game.width >= MAP_W && game.height >= MAP_H ? game : undefined;
 }
 
 export function cloneState(state: GameState): GameState {
   return structuredClone(state) as GameState;
+}
+
+function cloneRuntimeState(state: GameState): GameState {
+  return {
+    ...state,
+    stations: state.stations.map((station) => ({ ...station })),
+    trains: state.trains.map((train) => ({ ...train, route: [...train.route] })),
+    company: {
+      ...state.company,
+      loans: state.company.loans.map((loan) => ({ ...loan })),
+    },
+    clock: { ...state.clock },
+    multiplayer: { ...state.multiplayer, peers: [...state.multiplayer.peers] },
+  };
 }
 
 export function formatMoney(value: number): string {
@@ -422,8 +614,8 @@ function worldId(seed: string): string {
 }
 
 function fbm(x: number, y: number, seed: string): number {
-  const a = new Rng(`${seed}:a:${Math.floor(x / 5)}:${Math.floor(y / 5)}`).next();
-  const b = new Rng(`${seed}:b:${Math.floor(x / 11)}:${Math.floor(y / 11)}`).next();
-  const c = new Rng(`${seed}:c:${Math.floor(x / 19)}:${Math.floor(y / 19)}`).next();
+  const a = new Rng(`${seed}:a:${Math.floor(x / 9)}:${Math.floor(y / 9)}`).next();
+  const b = new Rng(`${seed}:b:${Math.floor(x / 19)}:${Math.floor(y / 19)}`).next();
+  const c = new Rng(`${seed}:c:${Math.floor(x / 37)}:${Math.floor(y / 37)}`).next();
   return (a * 0.5 + b * 0.32 + c * 0.18) - 0.5;
 }
