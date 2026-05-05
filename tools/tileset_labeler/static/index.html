@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tileset Labeler</title>
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="viewer">
+        <header class="topbar">
+          <div>
+            <h1>Tileset Labeler</h1>
+            <p id="position">Loading...</p>
+          </div>
+          <div class="toolbar">
+            <button id="prev" title="Previous tile">Prev</button>
+            <button id="next" title="Next tile">Next</button>
+            <label>
+              Zoom
+              <input id="zoom" type="range" min="4" max="24" value="12" />
+            </label>
+            <label>
+              Context
+              <input id="context" type="number" min="1" max="12" value="4" />
+            </label>
+            <a class="button" href="/api/manifest">CSV</a>
+          </div>
+        </header>
+
+        <div id="strip" class="strip"></div>
+
+        <div class="main-tile-shell">
+          <img id="mainTile" alt="Current tile" />
+        </div>
+        <p id="filename" class="filename"></p>
+      </section>
+
+      <form id="form" class="panel" autocomplete="off">
+        <label>
+          Label
+          <input id="label" name="label" placeholder="grass, rail curve, truck..." />
+        </label>
+
+        <div class="grid2">
+          <label>
+            Category
+            <select id="category" name="category">
+              <option value=""></option>
+              <option>terrain</option>
+              <option>road</option>
+              <option>rail</option>
+              <option>vehicle</option>
+              <option>building</option>
+              <option>industry</option>
+              <option>decoration</option>
+              <option>ui</option>
+              <option>unknown</option>
+            </select>
+          </label>
+          <label>
+            Transport
+            <select id="transport" name="transport">
+              <option value=""></option>
+              <option>none</option>
+              <option>road</option>
+              <option>rail</option>
+              <option>road_vehicle</option>
+              <option>rail_vehicle</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid2">
+          <label>
+            Terrain
+            <select id="terrain" name="terrain">
+              <option value=""></option>
+              <option>land</option>
+              <option>water</option>
+              <option>shore</option>
+              <option>bridge</option>
+              <option>tunnel</option>
+              <option>unknown</option>
+            </select>
+          </label>
+          <label>
+            Orientation
+            <select id="orientation" name="orientation">
+              <option value=""></option>
+              <option>N</option><option>NE</option><option>E</option><option>SE</option>
+              <option>S</option><option>SW</option><option>W</option><option>NW</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="check">
+          <input id="water_only" name="water_only" type="checkbox" />
+          Water only
+        </label>
+
+        <fieldset>
+          <legend>Connections</legend>
+          <div id="connections" class="directions"></div>
+        </fieldset>
+
+        <label>
+          Slope
+          <select id="slope" name="slope">
+            <option value=""></option>
+            <option>flat</option>
+            <option>up_N</option><option>up_NE</option><option>up_E</option><option>up_SE</option>
+            <option>up_S</option><option>up_SW</option><option>up_W</option><option>up_NW</option>
+            <option>down_N</option><option>down_NE</option><option>down_E</option><option>down_SE</option>
+            <option>down_S</option><option>down_SW</option><option>down_W</option><option>down_NW</option>
+          </select>
+        </label>
+
+        <label>
+          Notes
+          <textarea id="notes" name="notes" rows="5"></textarea>
+        </label>
+
+        <details class="shortcuts" open>
+          <summary>Shortcuts</summary>
+          <dl>
+            <dt>Enter</dt><dd>Save and next</dd>
+            <dt>Shift Enter</dt><dd>Save and previous</dd>
+            <dt>Left / Right</dt><dd>Previous / next</dd>
+            <dt>S</dt><dd>Save</dd>
+            <dt>L / M</dt><dd>Focus label / notes</dd>
+            <dt>1-8</dt><dd>Terrain, road, rail, vehicle, building, industry, decoration, unknown</dd>
+            <dt>Q W E / A D / Z X C</dt><dd>Toggle NW N NE / W E / SW S SE connections</dd>
+            <dt>Shift + direction key</dt><dd>Set orientation</dd>
+            <dt>F</dt><dd>Flat slope</dd>
+            <dt>U / J</dt><dd>Up / down slope using current orientation</dd>
+            <dt>R / T / V / B</dt><dd>Road, rail, road vehicle, rail vehicle</dd>
+            <dt>Y</dt><dd>Toggle water only</dd>
+            <dt>- / =</dt><dd>Zoom out / in</dd>
+          </dl>
+        </details>
+
+        <div class="status">
+          <span id="saveStatus">Ready</span>
+          <button id="save" type="submit">Save</button>
+        </div>
+      </form>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

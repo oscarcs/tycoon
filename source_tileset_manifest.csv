@@ -1,0 +1,270 @@
+filename,gfx_id,eff,slot,width,height,label,category,transport,terrain,water_only,connections,slope,orientation,notes,updated_at
+gfx_00186_tile_37f2_direct_eff_000_slot_000_37f2_direct.png,00186,000,000,32,16,empty tile (no outline),terrain,,land,false,,,,,2026-05-05T08:22:09+00:00
+gfx_00188_tile_37f2_direct_eff_001_slot_001_37f2_direct.png,00188,001,001,32,16,empty tile (no outline) with 50% dither,terrain,,land,false,,,,,2026-05-05T08:22:06+00:00
+gfx_00190_tile_37f2_direct_eff_002_slot_002_37f2_direct.png,00190,002,002,32,16,unknown,,,,false,,,,,2026-05-05T08:18:02+00:00
+gfx_00192_tile_37f2_direct_eff_003_slot_003_37f2_direct.png,00192,003,003,32,24,tunnel entrance,unknown,,,false,SE,,,,2026-05-05T08:22:44+00:00
+gfx_00194_tile_37f2_direct_eff_004_slot_004_37f2_direct.png,00194,004,004,32,16,empty tile with outline,terrain,,land,false,,,,,2026-05-05T08:22:04+00:00
+gfx_00195_tile_37f2_direct_eff_005_slot_005_37f2_direct.png,00195,005,005,32,16,empty tile with outline and 50% dither,terrain,,land,false,,,,,2026-05-05T08:22:01+00:00
+gfx_00196_tile_37f2_direct_eff_006_slot_006_37f2_direct.png,00196,006,006,32,16,empty tile with outline and darker dither,terrain,,land,false,,,,,2026-05-05T08:21:59+00:00
+gfx_00198_tile_37f2_direct_eff_008_slot_008_37f2_direct.png,00198,008,008,32,4,yellow rectangle?,,,,false,,,,,2026-05-05T08:18:55+00:00
+gfx_00200_tile_37f2_direct_eff_009_slot_009_37f2_direct.png,00200,009,009,32,16,empty tile with dark outline and red dither,terrain,,land,false,,,,,2026-05-05T08:21:56+00:00
+gfx_00202_tile_37f2_direct_eff_010_slot_010_37f2_direct.png,00202,010,010,32,16,empty tile with dark outline and green dither,terrain,,land,false,,,,,2026-05-05T08:21:54+00:00
+gfx_00204_tile_37f2_direct_eff_011_slot_011_37f2_direct.png,00204,011,011,32,16,empty grey tile with outline,,,,false,,,,,2026-05-05T08:19:46+00:00
+gfx_00206_tile_37f2_direct_eff_012_slot_012_37f2_direct.png,00206,012,012,32,32,power station or factory,building,,,false,,,,,2026-05-05T08:21:30+00:00
+gfx_00208_tile_37f2_direct_eff_013_slot_013_37f2_direct.png,00208,013,013,32,30,water treatment plant or factory,building,,,false,,,,,2026-05-05T08:21:27+00:00
+gfx_00210_tile_37f2_direct_eff_014_slot_014_37f2_direct.png,00210,014,014,32,20,unknown,,,,false,,,,,2026-05-05T08:20:40+00:00
+gfx_00212_tile_37f2_direct_eff_015_slot_015_37f2_direct.png,00212,015,015,32,32,unknown,,,,false,,,,,2026-05-05T08:20:43+00:00
+gfx_00214_tile_37f2_direct_eff_016_slot_016_37f2_direct.png,00214,016,016,32,18,empty concrete slab,,,,false,,,,,2026-05-05T08:20:52+00:00
+gfx_00216_tile_37f2_direct_eff_017_slot_017_37f2_direct.png,00216,017,017,32,22,port warehouse,building,,shore,false,,,,,2026-05-05T08:23:10+00:00
+gfx_00220_tile_37f2_direct_eff_024_slot_018_37f2_direct.png,00220,024,018,32,18,ship (rear),decoration,,water,true,,,SW,,2026-05-05T08:24:24+00:00
+gfx_00222_tile_37f2_direct_eff_025_slot_019_37f2_direct.png,00222,025,019,32,20,ship (middle),decoration,,water,false,,,SW,,2026-05-05T08:24:33+00:00
+gfx_00224_tile_37f2_direct_eff_026_slot_020_37f2_direct.png,00224,026,020,32,20,ship (front),decoration,,water,false,,,SW,,2026-05-05T08:24:36+00:00
+gfx_00226_tile_37f2_direct_eff_027_slot_021_37f2_direct.png,00226,027,021,32,18,ship empty (rear),decoration,,water,false,,,SW,,2026-05-05T08:24:43+00:00
+gfx_00218_tile_37f2_direct_eff_022_slot_022_37f2_direct.png,00218,022,022,32,1,empty,,,,false,,,,,2026-05-05T08:24:49+00:00
+gfx_00230_tile_37f2_direct_eff_029_slot_023_37f2_direct.png,00230,029,023,32,16,ship empty (front),decoration,,water,false,,,SW,,2026-05-05T08:25:04+00:00
+gfx_00228_tile_37f2_direct_eff_028_slot_028_37f2_direct.png,00228,028,028,32,28,port crane,decoration,,shore,false,,,NW,,2026-05-05T08:25:18+00:00
+gfx_00232_tile_37f2_direct_eff_030_slot_030_37f2_direct.png,00232,030,030,32,18,subway entrance?,,,,false,,,,,2026-05-05T08:25:44+00:00
+gfx_00234_tile_37f2_direct_eff_031_slot_031_37f2_direct.png,00234,031,031,32,20,bridge/elevated section pier?,,,,false,,,,,2026-05-05T08:26:04+00:00
+gfx_00236_tile_37f2_direct_eff_032_slot_032_37f2_direct.png,00236,032,032,32,32,"grassy slope (track on left, structure bottom)",,,land,false,,,SW,,2026-05-05T08:28:46+00:00
+gfx_00238_tile_37f2_direct_eff_033_slot_033_37f2_direct.png,00238,033,033,32,32,"grassy slope (track on left, structure top)",,,,false,,,SW,,2026-05-05T08:28:48+00:00
+gfx_00240_tile_37f2_direct_eff_034_slot_034_37f2_direct.png,00240,034,034,32,32,"grassy slope (track on right, structure bottom)",,,,false,,,SW,,2026-05-05T08:28:51+00:00
+gfx_00242_tile_37f2_direct_eff_035_slot_035_37f2_direct.png,00242,035,035,32,32,"grassy slope (track on right, structure top)",,,,false,,,SW,,2026-05-05T08:28:54+00:00
+gfx_00244_tile_37f2_direct_eff_036_slot_036_37f2_direct.png,00244,036,036,32,32,"grassy slope (track on left, structure bottom)",,,,false,,,SE,,2026-05-05T08:29:02+00:00
+gfx_00246_tile_37f2_direct_eff_037_slot_037_37f2_direct.png,00246,037,037,32,32,"grassy slope (track on left, structure top)",,,,false,,,SE,,2026-05-05T08:29:17+00:00
+gfx_00248_tile_37f2_direct_eff_038_slot_038_37f2_direct.png,00248,038,038,32,32,"grassy slope (track on right, no structure)",,,,false,,,SE,,2026-05-05T08:29:42+00:00
+gfx_00250_tile_37f2_direct_eff_039_slot_039_37f2_direct.png,00250,039,039,32,32,"grassy slope (track on right, minimal structure)",,,,false,,,SE,,2026-05-05T08:29:59+00:00
+gfx_00252_tile_37f2_direct_eff_040_slot_040_37f2_direct.png,00252,040,040,32,22,small tower A,,,,false,,,SW,,2026-05-05T08:31:15+00:00
+gfx_00254_tile_37f2_direct_eff_041_slot_041_37f2_direct.png,00254,041,041,32,22,small tower B,,,,false,,,SW,,2026-05-05T08:30:55+00:00
+gfx_00256_tile_37f2_direct_eff_042_slot_042_37f2_direct.png,00256,042,042,32,22,small tower B,,,,false,,,SE,,2026-05-05T08:31:39+00:00
+gfx_00258_tile_37f2_direct_eff_043_slot_043_37f2_direct.png,00258,043,043,32,22,small tower A,,,,false,,,SE,,2026-05-05T08:31:45+00:00
+gfx_00260_tile_37f2_direct_eff_044_slot_044_37f2_direct.png,00260,044,044,32,20,bridge/elevated section piers,,,,false,,,NE,,2026-05-05T08:32:17+00:00
+gfx_00262_tile_37f2_direct_eff_045_slot_045_37f2_direct.png,00262,045,045,32,20,bridge/elevated section piers,,,,false,,,NW,,2026-05-05T08:32:31+00:00
+gfx_00264_tile_37f2_direct_eff_046_slot_046_37f2_direct.png,00264,046,046,32,22,small house A,building,,,false,,,SW,,2026-05-05T08:34:11+00:00
+gfx_00266_tile_37f2_direct_eff_047_slot_047_37f2_direct.png,00266,047,047,32,20,small house B,building,,,false,,,SW,,2026-05-05T08:34:14+00:00
+gfx_00268_tile_37f2_direct_eff_048_slot_048_37f2_direct.png,00268,048,048,32,20,group of houses A,building,,,false,,,SW,,2026-05-05T08:34:17+00:00
+gfx_00270_tile_37f2_direct_eff_049_slot_049_37f2_direct.png,00270,049,049,32,20,group of houses B,building,,,false,,,SW,,2026-05-05T08:34:20+00:00
+gfx_00272_tile_37f2_direct_eff_050_slot_050_37f2_direct.png,00272,050,050,32,26,unknown,,,,false,,,,,2026-05-05T08:33:47+00:00
+gfx_00274_tile_37f2_direct_eff_051_slot_051_37f2_direct.png,00274,051,051,32,16,tile selection outline tool thing,ui,,,false,,,,,2026-05-05T08:34:06+00:00
+gfx_00276_tile_37f2_direct_eff_052_slot_052_37f2_direct.png,00276,052,052,32,16,water,terrain,,water,true,,,,,2026-05-05T08:34:41+00:00
+gfx_00278_tile_37f2_direct_eff_054_slot_054_37f2_direct.png,00278,054,054,32,16,water tile with yellow dithering,terrain,,water,true,,,,,2026-05-05T08:35:02+00:00
+gfx_00280_tile_37f2_direct_eff_055_slot_055_37f2_direct.png,00280,055,055,32,26,thick elevated/bridge pier,,,,false,,,,,2026-05-05T08:51:58+00:00
+gfx_00282_tile_37f2_direct_eff_057_slot_057_37f2_direct.png,00282,057,057,32,24,retaining wall?,,,,false,,,SE,,2026-05-05T08:36:41+00:00
+gfx_00284_tile_37f2_direct_eff_060_slot_060_37f2_direct.png,00284,060,060,32,22,road bridge pier,road,,land,false,,,SE,,2026-05-05T08:52:55+00:00
+gfx_00286_tile_37f2_direct_eff_061_slot_061_37f2_direct.png,00286,061,061,32,20,rail bridge pier,rail,rail,water,false,,,SE,,2026-05-05T08:52:37+00:00
+gfx_00288_tile_37f2_direct_eff_062_slot_062_37f2_direct.png,00288,062,062,32,24,road bridge pier,,,,false,,,SE,,2026-05-05T08:52:34+00:00
+gfx_00290_tile_37f2_direct_eff_063_slot_063_37f2_direct.png,00290,063,063,32,20,bridge/elevated section piers with single pier,,,,false,,,SW,,2026-05-05T08:38:06+00:00
+gfx_00292_tile_37f2_direct_eff_064_slot_064_37f2_direct.png,00292,064,064,32,18,rail,rail,rail,land,false,N|S,,,,2026-05-05T08:38:21+00:00
+gfx_00294_tile_37f2_direct_eff_065_slot_065_37f2_direct.png,00294,065,065,32,12,rail,rail,rail,land,false,SE|NW,,,,2026-05-05T08:38:35+00:00
+gfx_00296_tile_37f2_direct_eff_066_slot_066_37f2_direct.png,00296,066,066,32,6,rail,rail,rail,land,false,E|W,,,,2026-05-05T08:38:50+00:00
+gfx_00298_tile_37f2_direct_eff_068_slot_068_37f2_direct.png,00298,068,068,32,16,rail tunnel portal overlay,rail,rail,land,false,SE,,SE,,2026-05-05T08:39:27+00:00
+gfx_00300_tile_37f2_direct_eff_069_slot_069_37f2_direct.png,00300,069,069,32,32,rail tunnel portal frame,rail,rail,land,false,SE,,SE,,2026-05-05T08:39:47+00:00
+gfx_00302_tile_37f2_direct_eff_072_slot_072_37f2_direct.png,00302,072,072,32,16,rail,rail,rail,land,false,N|SE,,,,2026-05-05T08:39:59+00:00
+gfx_00304_tile_37f2_direct_eff_073_slot_073_37f2_direct.png,00304,073,073,32,8,rail,rail,rail,land,false,E|NW,,,,2026-05-05T08:40:25+00:00
+gfx_00306_tile_37f2_direct_eff_076_slot_076_37f2_direct.png,00306,076,076,32,14,rail,rail,rail,land,false,S|NW,,,,2026-05-05T08:40:38+00:00
+gfx_00308_tile_37f2_direct_eff_077_slot_077_37f2_direct.png,00308,077,077,32,10,rail,rail,rail,land,false,SE|W,,,,2026-05-05T08:40:48+00:00
+gfx_00310_tile_37f2_direct_eff_080_slot_080_37f2_direct.png,00310,080,080,32,18,rail,rail,rail,land,false,N|SE|S,,,,2026-05-05T08:41:16+00:00
+gfx_00312_tile_37f2_direct_eff_081_slot_081_37f2_direct.png,00312,081,081,32,12,rail,rail,rail,land,false,E|SE|NW,,,,2026-05-05T08:41:31+00:00
+gfx_00314_tile_37f2_direct_eff_082_slot_082_37f2_direct.png,00314,082,082,32,8,rail,rail,rail,land,false,NE|E|W,,,,2026-05-05T08:41:49+00:00
+gfx_00316_tile_37f2_direct_eff_083_slot_083_37f2_direct.png,00316,083,083,32,18,rail,rail,rail,land,false,N|NE|SW,,,,2026-05-05T08:42:17+00:00
+gfx_00318_tile_37f2_direct_eff_084_slot_084_37f2_direct.png,00318,084,084,32,18,rail,rail,rail,land,false,N|S|NW,,,,2026-05-05T08:42:30+00:00
+gfx_00320_tile_37f2_direct_eff_085_slot_085_37f2_direct.png,00320,085,085,32,12,rail,rail,rail,land,false,SE|W|NW,,,,2026-05-05T08:42:43+00:00
+gfx_00322_tile_37f2_direct_eff_086_slot_086_37f2_direct.png,00322,086,086,32,10,rail,rail,rail,land,false,E|SW|W,,,,2026-05-05T08:42:54+00:00
+gfx_00324_tile_37f2_direct_eff_087_slot_087_37f2_direct.png,00324,087,087,32,14,rail,rail,rail,land,false,NE|S|SW,,,,2026-05-05T08:43:19+00:00
+gfx_00326_tile_37f2_direct_eff_096_slot_096_37f2_direct.png,00326,096,096,32,18,monorail,rail,rail,land,false,N|S,,,,2026-05-05T08:43:34+00:00
+gfx_00328_tile_37f2_direct_eff_097_slot_097_37f2_direct.png,00328,097,097,32,12,monorail,rail,rail,land,false,SE|NW,,,,2026-05-05T08:45:41+00:00
+gfx_00330_tile_37f2_direct_eff_098_slot_098_37f2_direct.png,00330,098,098,32,4,monorail,rail,rail,land,false,E|W,,,,2026-05-05T08:45:54+00:00
+gfx_00340_tile_37f2_direct_eff_104_slot_104_37f2_direct.png,00340,104,104,32,14,monorail,rail,rail,land,false,N|SE,,,,2026-05-05T08:47:05+00:00
+gfx_00342_tile_37f2_direct_eff_105_slot_105_37f2_direct.png,00342,105,105,32,8,monorail,rail,rail,land,false,E|NW,,,,2026-05-05T08:47:04+00:00
+gfx_00344_tile_37f2_direct_eff_108_slot_108_37f2_direct.png,00344,108,108,32,14,monorail,,,,false,S|NW,,,,2026-05-05T08:46:59+00:00
+gfx_00346_tile_37f2_direct_eff_109_slot_109_37f2_direct.png,00346,109,109,32,10,monorail,rail,rail,land,false,SE|W,,,,2026-05-05T08:47:18+00:00
+gfx_00348_tile_37f2_direct_eff_112_slot_112_37f2_direct.png,00348,112,112,32,16,rail,rail,rail,land,false,,up_NW,,,2026-05-05T08:56:08+00:00
+gfx_00350_tile_37f2_direct_eff_113_slot_113_37f2_direct.png,00350,113,113,32,8,rail,rail,rail,land,false,,up_SE,,,2026-05-05T08:54:19+00:00
+gfx_00352_tile_37f2_direct_eff_114_slot_114_37f2_direct.png,00352,114,114,32,16,rail,rail,rail,land,false,,up_NE,,,2026-05-05T08:54:21+00:00
+gfx_00354_tile_37f2_direct_eff_115_slot_115_37f2_direct.png,00354,115,115,32,8,rail,rail,rail,land,false,,up_SW,,,2026-05-05T08:54:36+00:00
+gfx_00356_tile_37f2_direct_eff_116_slot_116_37f2_direct.png,00356,116,116,32,22,road,road,road,land,false,,up_NW,,,2026-05-05T08:55:08+00:00
+gfx_00358_tile_37f2_direct_eff_117_slot_117_37f2_direct.png,00358,117,117,32,28,road,road,road,land,false,,up_SW,,,2026-05-05T08:55:28+00:00
+gfx_00360_tile_37f2_direct_eff_118_slot_118_37f2_direct.png,00360,118,118,32,22,road,road,road,land,false,,up_NE,,,2026-05-05T08:55:44+00:00
+gfx_00362_tile_37f2_direct_eff_119_slot_119_37f2_direct.png,00362,119,119,32,14,road,road,road,land,false,,up_SW,,,2026-05-05T08:55:56+00:00
+gfx_00364_tile_37f2_direct_eff_120_slot_120_37f2_direct.png,00364,120,120,32,16,road tunnel portal overlay,road,road,land,false,SE,,SE,,2026-05-05T08:56:56+00:00
+gfx_00366_tile_37f2_direct_eff_121_slot_121_37f2_direct.png,00366,121,121,32,32,road tunnel portal frame,road,road,land,false,SE,,SE,,2026-05-05T08:56:55+00:00
+gfx_00368_tile_37f2_direct_eff_124_slot_124_37f2_direct.png,00368,124,124,32,22,rail bridge with rail at rear,vehicle,rail,bridge,false,SE|NW,,SE,,2026-05-05T08:57:55+00:00
+gfx_00370_tile_37f2_direct_eff_125_slot_125_37f2_direct.png,00370,125,125,32,18,rail bridge front rail only,rail,rail,bridge,false,,,SE,,2026-05-05T08:58:29+00:00
+gfx_00372_tile_37f2_direct_eff_128_slot_128_37f2_direct.png,00372,128,128,32,16,rail with concrete underneath for station,rail,rail,land,false,SE|NW,,SE,,2026-05-05T08:59:19+00:00
+gfx_00374_tile_37f2_direct_eff_129_slot_129_37f2_direct.png,00374,129,129,32,18,rail footbridge,rail,rail,,false,NE|SW,,SE,,2026-05-05T09:01:16+00:00
+gfx_00376_tile_37f2_direct_eff_130_slot_130_37f2_direct.png,00376,130,130,32,16,rail with concrete underneath for station,rail,rail,land,false,NE|SW,,SW,,2026-05-05T09:01:41+00:00
+gfx_00378_tile_37f2_direct_eff_131_slot_131_37f2_direct.png,00378,131,131,32,18,rail footbridge,rail,rail,,false,SE|NW,,SW,,2026-05-05T09:01:13+00:00
+gfx_00380_tile_37f2_direct_eff_132_slot_132_37f2_direct.png,00380,132,132,32,26,rail with level crossing arm,rail,rail,land,false,SE|NW,,,,2026-05-05T09:02:00+00:00
+gfx_00382_tile_37f2_direct_eff_133_slot_133_37f2_direct.png,00382,133,133,32,20,level crossing arm up,rail,rail,land,false,,,,,2026-05-05T09:02:23+00:00
+gfx_00384_tile_37f2_direct_eff_136_slot_136_37f2_direct.png,00384,136,136,32,18,rail with level crossing arm down,rail,rail,land,false,SE|NW,,,,2026-05-05T09:02:59+00:00
+gfx_00386_tile_37f2_direct_eff_137_slot_137_37f2_direct.png,00386,137,137,32,14,level crossing arm down,rail,rail,land,false,,,,,2026-05-05T09:02:34+00:00
+gfx_00388_tile_37f2_direct_eff_140_slot_140_37f2_direct.png,00388,140,140,32,18,road,road,road,land,false,SE|NW,,,,2026-05-05T09:03:21+00:00
+gfx_00390_tile_37f2_direct_eff_142_slot_142_37f2_direct.png,00390,142,142,32,16,road,road,road,land,false,NE|SE|SW|NW,,,,2026-05-05T09:03:42+00:00
+gfx_00392_tile_37f2_direct_eff_143_slot_143_37f2_direct.png,00392,143,143,32,18,road,road,road,land,false,SE|SW,,,,2026-05-05T09:03:52+00:00
+gfx_00394_tile_37f2_direct_eff_144_slot_144_37f2_direct.png,00394,144,144,32,18,road,road,road,land,false,SW|NW,,,,2026-05-05T09:04:09+00:00
+gfx_00396_tile_37f2_direct_eff_145_slot_145_37f2_direct.png,00396,145,145,32,16,road,road,road,land,false,NE|NW,,,,2026-05-05T09:04:20+00:00
+gfx_00398_tile_37f2_direct_eff_147_slot_147_37f2_direct.png,00398,147,147,32,22,house A,building,none,land,false,,,SW,,2026-05-05T09:05:09+00:00
+gfx_00400_tile_37f2_direct_eff_148_slot_148_37f2_direct.png,00400,148,148,32,24,house B,building,none,land,false,,,SW,,2026-05-05T09:05:20+00:00
+gfx_00402_tile_37f2_direct_eff_149_slot_149_37f2_direct.png,00402,149,149,32,26,house C,building,none,land,false,,,SW,,2026-05-05T09:05:52+00:00
+gfx_00404_tile_37f2_direct_eff_168_slot_168_37f2_direct.png,00404,168,168,32,32,air traffic control tower,building,,land,false,,,SW,,2026-05-05T09:06:42+00:00
+gfx_00406_tile_37f2_direct_eff_169_slot_169_37f2_direct.png,00406,169,169,32,22,airport terminal,building,none,land,false,,,SW,,2026-05-05T09:06:59+00:00
+gfx_00408_tile_37f2_direct_eff_173_slot_173_37f2_direct.png,00408,173,173,32,16,runway corner with surrounding grass,decoration,,land,false,SE,,,,2026-05-05T09:08:36+00:00
+gfx_00410_tile_37f2_direct_eff_176_slot_176_37f2_direct.png,00410,176,176,32,16,airport gates,building,,land,false,NE,,,,2026-05-05T09:07:57+00:00
+gfx_00412_tile_37f2_direct_eff_177_slot_177_37f2_direct.png,00412,177,177,32,20,airport hangar,building,,land,false,,,,,2026-05-05T09:08:08+00:00
+gfx_00414_tile_37f2_direct_eff_180_slot_180_37f2_direct.png,00414,180,180,32,16,runway,decoration,,land,false,SW,,,,2026-05-05T09:09:12+00:00
+gfx_00416_tile_37f2_direct_eff_181_slot_181_37f2_direct.png,00416,181,181,32,16,runway,decoration,,,false,NE|SW,,,,2026-05-05T09:09:06+00:00
+gfx_00417_tile_37f2_direct_eff_182_slot_182_37f2_direct.png,00417,182,182,32,16,runway,decoration,,land,false,NE,,,,2026-05-05T09:09:30+00:00
+gfx_00418_tile_37f2_direct_eff_183_slot_183_37f2_direct.png,00418,183,183,32,16,taxiway,decoration,,land,false,NE|SW,,,,2026-05-05T09:10:33+00:00
+gfx_00420_tile_37f2_direct_eff_185_slot_185_37f2_direct.png,00420,185,185,32,16,runway corner with surrounding grass,decoration,,land,false,N,,,,2026-05-05T09:11:07+00:00
+gfx_00422_tile_37f2_direct_eff_186_slot_186_37f2_direct.png,00422,186,186,32,16,runway corner with surrounding grass,decoration,,land,false,S,,,,2026-05-05T09:11:19+00:00
+gfx_00424_tile_37f2_direct_eff_187_slot_187_37f2_direct.png,00424,187,187,32,16,runway corner with surrounding grass,,,,false,SW,,,,2026-05-05T09:11:29+00:00
+gfx_00426_tile_37f2_direct_eff_192_slot_192_37f2_direct.png,00426,192,192,32,16,docked yachts,decoration,,shore,true,SE,,,connection here means 'to pier',2026-05-05T09:13:16+00:00
+gfx_00428_tile_37f2_direct_eff_193_slot_193_37f2_direct.png,00428,193,193,32,18,docket yachts,decoration,,shore,true,NE,,,,2026-05-05T09:12:29+00:00
+gfx_00430_tile_37f2_direct_eff_194_slot_194_37f2_direct.png,00430,194,194,32,18,docked yachts,decoration,,shore,true,NW,,,,2026-05-05T09:12:49+00:00
+gfx_00432_tile_37f2_direct_eff_195_slot_195_37f2_direct.png,00432,195,195,32,20,docked yachts,decoration,,shore,true,SW,,,,2026-05-05T09:13:02+00:00
+gfx_00434_tile_37f2_direct_eff_196_slot_196_37f2_direct.png,00434,196,196,32,16,pier,decoration,,shore,true,E|W,,,,2026-05-05T09:13:33+00:00
+gfx_00436_tile_37f2_direct_eff_198_slot_198_37f2_direct.png,00436,198,198,32,14,aircraft,decoration,,,false,,,NE,,2026-05-05T09:14:07+00:00
+gfx_00438_tile_37f2_direct_eff_200_slot_200_37f2_direct.png,00438,200,200,32,20,suburban train station building,building,rail,land,false,NE|SW,,NW,"connections here are to other platform pieces, orientation points in the direction of the railway",2026-05-05T09:16:43+00:00
+gfx_00440_tile_37f2_direct_eff_201_slot_201_37f2_direct.png,00440,201,201,32,22,suburban train station building,building,rail,land,false,SE|NW,,SW,"connections here are to other platform pieces, orientation points in the direction of the railway",2026-05-05T09:16:49+00:00
+gfx_00442_tile_37f2_direct_eff_202_slot_202_37f2_direct.png,00442,202,202,32,22,suburban train station building,building,rail,land,false,NE|SW,,SE,"connections here are to other platform pieces, orientation points in the direction of the railway",2026-05-05T09:16:33+00:00
+gfx_00444_tile_37f2_direct_eff_203_slot_203_37f2_direct.png,00444,203,203,32,20,suburban train station platform,building,rail,land,false,SE|NW,,NE,"connections here are to other platform pieces, orientation points in the direction of the railway",2026-05-05T09:17:16+00:00
+gfx_00446_tile_37f2_direct_eff_204_slot_204_37f2_direct.png,00446,204,204,32,28,urban train station building,building,rail,land,false,NE|SW,,NW,"connections here are to other platform pieces, orientation points in the direction of the railway",2026-05-05T09:18:55+00:00
+gfx_00448_tile_37f2_direct_eff_205_slot_205_37f2_direct.png,00448,205,205,32,32,urban train station building,building,rail,land,false,SE|NW,,SW,,2026-05-05T09:18:51+00:00
+gfx_00450_tile_37f2_direct_eff_206_slot_206_37f2_direct.png,00450,206,206,32,32,urban train station building,building,rail,land,false,NE|SW,,SE,,2026-05-05T09:18:48+00:00
+gfx_00452_tile_37f2_direct_eff_207_slot_207_37f2_direct.png,00452,207,207,32,28,urban train station building,building,rail,land,false,SE|NW,,NE,,2026-05-05T09:19:15+00:00
+gfx_00454_tile_37f2_direct_eff_208_slot_208_37f2_direct.png,00454,208,208,32,28,stairs up to rail footbridge,building,rail,land,false,NE|SE|SW|NW,,,"connections to other platform pieces are SW and NE
+connections to other footbridge pieces are NW and SE",2026-05-05T09:21:00+00:00
+gfx_00456_tile_37f2_direct_eff_209_slot_209_37f2_direct.png,00456,209,209,32,28,stairs up to rail footbridge,building,rail,land,false,NE|SE|SW|NW,,,"connections to other platform pieces are SE and NW
+connections to other footbridge pieces are SW and NE",2026-05-05T09:21:17+00:00
+gfx_00458_tile_37f2_direct_eff_210_slot_210_37f2_direct.png,00458,210,210,32,20,platform,building,rail,land,false,NE|SW,,,connections to other platform pieces,2026-05-05T09:22:21+00:00
+gfx_00460_tile_37f2_direct_eff_211_slot_211_37f2_direct.png,00460,211,211,32,20,platform,building,rail,land,false,SE|NW,,,connections to other platform pieces,2026-05-05T09:22:41+00:00
+gfx_00462_tile_37f2_direct_eff_212_slot_212_37f2_direct.png,00462,212,212,32,30,platform with piers (for multilevel stations?),building,rail,land,false,NE|SW,,,platform connects to NE and SW. piers are NW and SE,2026-05-05T09:23:32+00:00
+gfx_00464_tile_37f2_direct_eff_213_slot_213_37f2_direct.png,00464,213,213,32,30,platform with piers (for multilevel stations?),building,rail,land,false,SE|NW,,,platform connects to NW and SE. piers are NE and SW,2026-05-05T09:24:11+00:00
+gfx_00466_tile_37f2_direct_eff_214_slot_214_37f2_direct.png,00466,214,214,32,16,runway corner with surrounding grass,decoration,,land,false,NE,,,,2026-05-05T09:24:36+00:00
+gfx_00468_tile_37f2_direct_eff_215_slot_215_37f2_direct.png,00468,215,215,32,16,runway corner with surrounding grass,decoration,,land,false,NW,,,,2026-05-05T09:24:53+00:00
+gfx_00476_tile_37f2_direct_eff_220_slot_220_37f2_direct.png,00476,220,220,32,26,petrol station?,road,road,land,false,NW,,,petrol station that I think connects to the NW,2026-05-05T09:26:13+00:00
+gfx_00478_tile_37f2_direct_eff_221_slot_221_37f2_direct.png,00478,221,221,32,24,petrol station?,road,road,land,false,SW,,,petrol station that I think connects to the SW,2026-05-05T09:26:21+00:00
+gfx_00480_tile_37f2_direct_eff_224_slot_224_37f2_direct.png,00480,224,224,32,22,house with red roof,building,,land,false,,,,,2026-05-05T09:26:59+00:00
+gfx_00482_tile_37f2_direct_eff_225_slot_225_37f2_direct.png,00482,225,225,32,24,house with light blue roof,building,,land,false,,,,,2026-05-05T09:27:45+00:00
+gfx_00484_tile_37f2_direct_eff_226_slot_226_37f2_direct.png,00484,226,226,32,24,house with grey roof,building,,land,false,,,,,2026-05-05T09:27:21+00:00
+gfx_00486_tile_37f2_direct_eff_227_slot_227_37f2_direct.png,00486,227,227,32,24,farmhouse,building,,land,false,,,,,2026-05-05T09:27:36+00:00
+gfx_00488_tile_37f2_direct_eff_228_slot_228_37f2_direct.png,00488,228,228,32,26,house with blue roof,building,,land,false,,,,,2026-05-05T09:27:57+00:00
+gfx_00490_tile_37f2_direct_eff_229_slot_229_37f2_direct.png,00490,229,229,32,28,house with grey roof B,building,,land,false,,,,,2026-05-05T09:28:23+00:00
+gfx_00492_tile_37f2_direct_eff_230_slot_230_37f2_direct.png,00492,230,230,32,16,park (fountain),terrain,,land,false,,,,,2026-05-05T12:12:47+00:00
+gfx_00494_tile_37f2_direct_eff_231_slot_231_37f2_direct.png,00494,231,231,32,16,park (empty),terrain,,land,false,,,,,2026-05-05T12:13:25+00:00
+gfx_00496_tile_37f2_direct_eff_232_slot_232_37f2_direct.png,00496,232,232,32,22,convenience store,building,,land,false,,,,,2026-05-05T09:30:05+00:00
+gfx_00498_tile_37f2_direct_eff_233_slot_233_37f2_direct.png,00498,233,233,32,22,shop with blue roof,building,,land,false,,,,,2026-05-05T09:30:21+00:00
+gfx_00500_tile_37f2_direct_eff_234_slot_234_37f2_direct.png,00500,234,234,32,24,shop with red roof,building,,land,false,,,,,2026-05-05T09:30:35+00:00
+gfx_00502_tile_37f2_direct_eff_235_slot_235_37f2_direct.png,00502,235,235,32,24,modern house with red roof,building,,land,false,,,,,2026-05-05T09:30:55+00:00
+gfx_00504_tile_37f2_direct_eff_236_slot_236_37f2_direct.png,00504,236,236,32,28,primary school,building,,land,false,,,,,2026-05-05T09:31:30+00:00
+gfx_00506_tile_37f2_direct_eff_237_slot_237_37f2_direct.png,00506,237,237,32,24,secondary school,building,,land,false,,,,,2026-05-05T09:31:44+00:00
+gfx_00508_tile_37f2_direct_eff_238_slot_238_37f2_direct.png,00508,238,238,32,16,park (pond),terrain,,land,false,,,,,2026-05-05T12:12:18+00:00
+gfx_00510_tile_37f2_direct_eff_239_slot_239_37f2_direct.png,00510,239,239,32,16,park (plaza),terrain,,land,false,,,,,2026-05-05T12:12:32+00:00
+gfx_00512_tile_37f2_direct_eff_240_slot_240_37f2_direct.png,00512,240,240,32,32,"midrise building, square",building,,land,false,,,,,2026-05-05T09:33:26+00:00
+gfx_00514_tile_37f2_direct_eff_241_slot_241_37f2_direct.png,00514,241,241,32,32,"midrise building, l-shaped",building,,land,false,,,,,2026-05-05T09:33:38+00:00
+gfx_00516_tile_37f2_direct_eff_242_slot_242_37f2_direct.png,00516,242,242,32,32,"midrise building, hipped roof",building,,land,false,,,,,2026-05-05T09:33:54+00:00
+gfx_00518_tile_37f2_direct_eff_243_slot_243_37f2_direct.png,00518,243,243,32,32,midrise commercial building A,building,,land,false,,,,,2026-05-05T09:34:50+00:00
+gfx_00520_tile_37f2_direct_eff_244_slot_244_37f2_direct.png,00520,244,244,32,32,midrise commercial building B,building,,land,false,,,,,2026-05-05T09:34:55+00:00
+gfx_00522_tile_37f2_direct_eff_245_slot_245_37f2_direct.png,00522,245,245,32,32,midrise commercial building C,building,,land,false,,,,,2026-05-05T09:35:21+00:00
+gfx_00524_tile_37f2_direct_eff_246_slot_246_37f2_direct.png,00524,246,246,32,20,park section,decoration,,land,false,SE,,,seems to connect to SE,2026-05-05T09:35:49+00:00
+gfx_00526_tile_37f2_direct_eff_247_slot_247_37f2_direct.png,00526,247,247,32,20,park section,decoration,,land,false,NE|SW,,,boulevard type park section connecting to NE and SW. flippable.,2026-05-05T09:36:27+00:00
+gfx_00528_tile_37f2_direct_eff_248_slot_248_37f2_direct.png,00528,248,248,32,30,"midrise building, L-shaped B",building,,land,false,,,,,2026-05-05T09:37:01+00:00
+gfx_00530_tile_37f2_direct_eff_249_slot_249_37f2_direct.png,00530,249,249,32,30,midrise building,building,,land,false,,,,,2026-05-05T09:37:59+00:00
+gfx_00532_tile_37f2_direct_eff_250_slot_250_37f2_direct.png,00532,250,250,32,32,midrise building with hipped blue roof,building,,land,false,,,,,2026-05-05T09:38:21+00:00
+gfx_00534_tile_37f2_direct_eff_251_slot_251_37f2_direct.png,00534,251,251,32,14,containers x2,industry,,land,false,,,,,2026-05-05T09:38:34+00:00
+gfx_00536_tile_37f2_direct_eff_252_slot_252_37f2_direct.png,00536,252,252,32,18,containers x4,industry,,land,false,,,,,2026-05-05T09:38:45+00:00
+gfx_00538_tile_37f2_direct_eff_253_slot_253_37f2_direct.png,00538,253,253,32,22,containers x6,industry,,land,false,,,,,2026-05-05T09:38:55+00:00
+gfx_00540_tile_37f2_direct_eff_254_slot_254_37f2_direct.png,00540,254,254,32,22,containers x8,industry,,land,false,,,,,2026-05-05T09:39:04+00:00
+gfx_00542_tile_37f2_direct_eff_256_slot_256_37f2_direct.png,00542,256,256,32,18,crane,industry,,land,false,,,,,2026-05-05T09:39:47+00:00
+gfx_00544_tile_37f2_direct_eff_257_slot_257_37f2_direct.png,00544,257,257,32,28,stackable highrise building A,building,,land,false,,,,,2026-05-05T09:40:20+00:00
+gfx_00546_tile_37f2_direct_eff_258_slot_258_37f2_direct.png,00546,258,258,32,26,stackable highrise building B,building,,land,false,,,,,2026-05-05T09:40:34+00:00
+gfx_00548_tile_37f2_direct_eff_259_slot_259_37f2_direct.png,00548,259,259,32,24,stackable highrise building C,building,,land,false,,,,,2026-05-05T09:41:04+00:00
+gfx_00550_tile_37f2_direct_eff_260_slot_260_37f2_direct.png,00550,260,260,32,28,stackable highrise building D,building,,land,false,,,,,2026-05-05T09:41:23+00:00
+gfx_00552_tile_37f2_direct_eff_261_slot_261_37f2_direct.png,00552,261,261,32,28,stackable highrise building E,building,,land,false,,,,,2026-05-05T09:41:32+00:00
+gfx_00554_tile_37f2_direct_eff_262_slot_262_37f2_direct.png,00554,262,262,32,30,stackable highrise building F,building,,land,false,,,,,2026-05-05T09:41:42+00:00
+gfx_00556_tile_37f2_direct_eff_263_slot_263_37f2_direct.png,00556,263,263,32,28,stackable highrise building G,building,,land,false,,,,,2026-05-05T09:41:53+00:00
+gfx_00558_tile_37f2_direct_eff_264_slot_264_37f2_direct.png,00558,264,264,32,30,stackable highrise building H,building,,land,false,,,,,2026-05-05T09:42:04+00:00
+gfx_00560_tile_37f2_direct_eff_265_slot_265_37f2_direct.png,00560,265,265,32,28,stackable highrise building I,building,,land,false,,,,,2026-05-05T09:42:36+00:00
+gfx_00562_tile_37f2_direct_eff_266_slot_266_37f2_direct.png,00562,266,266,32,30,stackable highrise building J,building,,land,false,,,,,2026-05-05T09:43:09+00:00
+gfx_00564_tile_37f2_direct_eff_267_slot_267_37f2_direct.png,00564,267,267,32,30,stackable highrise building K,building,,land,false,,,,,2026-05-05T09:43:10+00:00
+gfx_00566_tile_37f2_direct_eff_268_slot_268_37f2_direct.png,00566,268,268,32,30,stackable highrise building L,building,,land,false,,,,,2026-05-05T09:43:11+00:00
+gfx_00568_tile_37f2_direct_eff_269_slot_269_37f2_direct.png,00568,269,269,32,32,stackable highrise building M,building,,land,false,,,,,2026-05-05T09:43:42+00:00
+gfx_00570_tile_37f2_direct_eff_270_slot_270_37f2_direct.png,00570,270,270,32,32,stackable highrise building N,,,,false,,,,,2026-05-05T09:43:47+00:00
+gfx_00572_tile_37f2_direct_eff_271_slot_271_37f2_direct.png,00572,271,271,32,32,stackable highrise building O,,,,false,,,,,2026-05-05T09:43:51+00:00
+gfx_00574_tile_37f2_direct_eff_272_slot_272_37f2_direct.png,00574,272,272,32,32,stackable highrise building P,,,,false,,,,,2026-05-05T09:43:53+00:00
+gfx_00576_tile_37f2_direct_eff_273_slot_273_37f2_direct.png,00576,273,273,32,28,stackable highrise building Q,,,,false,,,,,2026-05-05T09:43:55+00:00
+gfx_00578_tile_37f2_direct_eff_274_slot_274_37f2_direct.png,00578,274,274,32,28,stackable highrise building R,,,,false,,,,,2026-05-05T09:43:58+00:00
+gfx_00580_tile_37f2_direct_eff_275_slot_275_37f2_direct.png,00580,275,275,32,22,stackable highrise building Q/R piece,building,,land,false,,,,I think this goes on top of the Q/R buildings as like a narrowing piece before the spire,2026-05-05T09:46:13+00:00
+gfx_00582_tile_37f2_direct_eff_276_slot_276_37f2_direct.png,00582,276,276,32,24,stackable highrise building Q/R spire,building,,land,false,,,,,2026-05-05T09:46:30+00:00
+gfx_00584_tile_37f2_direct_eff_277_slot_277_37f2_direct.png,00584,277,277,32,28,construction crane on platform?,,,,false,,,,,2026-05-05T09:46:54+00:00
+gfx_00586_tile_37f2_direct_eff_278_slot_278_37f2_direct.png,00586,278,278,32,8,small roof piece,,,,false,,,,"optionally goes on top of stackable buildings as like, rooftop AC/clutter",2026-05-05T09:48:04+00:00
+gfx_00588_tile_37f2_direct_eff_279_slot_279_37f2_direct.png,00588,279,279,32,12,large roof piece,,,,false,,,,"optionally goes on top of stackable buildings as like, rooftop AC/clutter",2026-05-05T09:48:16+00:00
+gfx_00590_tile_37f2_direct_eff_288_slot_288_37f2_direct.png,00590,288,288,32,32,tokyo tower (ground),building,,land,false,,,,has to go with other pieces of the tower,2026-05-05T09:49:14+00:00
+gfx_00592_tile_37f2_direct_eff_289_slot_289_37f2_direct.png,00592,289,289,32,26,tokyo tower (level 1),building,,land,false,,,,,2026-05-05T09:49:36+00:00
+gfx_00594_tile_37f2_direct_eff_290_slot_290_37f2_direct.png,00594,290,290,32,20,tokyo tower (level 2),building,,land,false,,,,,2026-05-05T09:49:49+00:00
+gfx_00596_tile_37f2_direct_eff_291_slot_291_37f2_direct.png,00596,291,291,32,22,tokyo tower (level 3),building,,land,false,,,,,2026-05-05T09:49:56+00:00
+gfx_00598_tile_37f2_direct_eff_292_slot_292_37f2_direct.png,00598,292,292,32,22,tokyo tower (level 4),building,,land,false,,,,,2026-05-05T09:50:11+00:00
+gfx_00600_tile_37f2_direct_eff_293_slot_293_37f2_direct.png,00600,293,293,32,26,observation tower (ground),,,,false,,,,has to go with the other pieces of the tower,2026-05-05T09:50:30+00:00
+gfx_00602_tile_37f2_direct_eff_294_slot_294_37f2_direct.png,00602,294,294,32,22,observation tower (middle piece),building,,land,false,,,,in theory could be multiple of this piece above the ground piece and below the observation deck,2026-05-05T09:51:16+00:00
+gfx_00604_tile_37f2_direct_eff_295_slot_295_37f2_direct.png,00604,295,295,32,28,observation tower (observation deck),building,,land,false,,,,top piece of the observation tower,2026-05-05T09:51:39+00:00
+gfx_00606_tile_37f2_direct_eff_296_slot_296_37f2_direct.png,00606,296,296,32,26,buddhist temple,building,,land,false,,,,,2026-05-05T09:51:51+00:00
+gfx_00608_tile_37f2_direct_eff_297_slot_297_37f2_direct.png,00608,297,297,32,22,mon gate,building,,land,false,,,,goes with buddhist temple,2026-05-05T09:52:12+00:00
+gfx_00610_tile_37f2_direct_eff_298_slot_298_37f2_direct.png,00610,298,298,32,20,vegetation,decoration,,land,false,,,,,2026-05-05T09:52:22+00:00
+gfx_00612_tile_37f2_direct_eff_299_slot_299_37f2_direct.png,00612,299,299,32,22,temple,building,,land,false,,,,,2026-05-05T09:52:43+00:00
+gfx_00614_tile_37f2_direct_eff_300_slot_300_37f2_direct.png,00614,300,300,32,16,warehouse roof section without wall,building,,land,false,NE|SE|SW|NW,,,has no walls or frontage - middle only,2026-05-05T11:29:51+00:00
+gfx_00616_tile_37f2_direct_eff_301_slot_301_37f2_direct.png,00616,301,301,32,24,warehouse frontage section without side wall,building,,land,false,,,,"front section of warehouse that has no visible wall, so has to be to the 'northwest' of a frontage section with a wall",2026-05-05T11:30:27+00:00
+gfx_00618_tile_37f2_direct_eff_302_slot_302_37f2_direct.png,00618,302,302,32,24,warehouse roof section with wall,building,,land,false,SW|NW,,,"section of warehouse, has no frontage but does have 'front wall'; has to have a frontage section with wall to the 'south west'",2026-05-05T11:32:08+00:00
+gfx_00620_tile_37f2_direct_eff_303_slot_303_37f2_direct.png,00620,303,303,32,24,warehouse frontage section with wall,building,,land,false,NE|NW,,,"warehouse frontage section with wall. needs a roof section with a wall 'behind it', i.e. to the 'north east'.",2026-05-05T11:33:27+00:00
+gfx_00622_tile_37f2_direct_eff_304_slot_304_37f2_direct.png,00622,304,304,32,24,shinto temple,building,,land,false,,,,,2026-05-05T11:33:47+00:00
+gfx_00624_tile_37f2_direct_eff_305_slot_305_37f2_direct.png,00624,305,305,32,24,torii gate,decoration,,land,false,,,,goes with shinto temple,2026-05-05T11:34:05+00:00
+gfx_00626_tile_37f2_direct_eff_307_slot_307_37f2_direct.png,00626,307,307,32,22,lowrise building with light red roof,building,,land,false,,,,,2026-05-05T11:34:27+00:00
+gfx_00628_tile_37f2_direct_eff_320_slot_320_37f2_direct.png,00628,320,320,32,24,,,,,false,N|S,,S,,2026-05-05T11:34:34+00:00
+gfx_00714_tile_37f2_direct_eff_396_slot_396_37f2_direct.png,00714,396,396,32,16,farmland,terrain,,land,false,,,,flippable,2026-05-05T11:37:29+00:00
+gfx_00716_tile_37f2_direct_eff_398_slot_398_37f2_direct.png,00716,398,398,32,16,farmland 2,terrain,,water,false,,,,flippable,2026-05-05T11:37:43+00:00
+gfx_00718_tile_37f2_direct_eff_400_slot_400_37f2_direct.png,00718,400,400,32,16,,,,,false,,,,,2026-05-05T11:37:44+00:00
+gfx_00724_tile_37f2_direct_eff_407_slot_407_37f2_direct.png,00724,407,407,32,28,santa,decoration,,,false,,,,santa in his sleigh. I guess this is supposed to fly across the screen at Christmas,2026-05-05T11:38:42+00:00
+gfx_00726_tile_37f2_direct_eff_408_slot_408_37f2_direct.png,00726,408,408,32,18,forest (growth stage 1),terrain,,land,false,,,,,2026-05-05T11:39:15+00:00
+gfx_00728_tile_37f2_direct_eff_409_slot_409_37f2_direct.png,00728,409,409,32,20,forest (growth stage 2),terrain,,land,false,,,,,2026-05-05T11:39:31+00:00
+gfx_00730_tile_37f2_direct_eff_410_slot_410_37f2_direct.png,00730,410,410,32,22,forest (growth stage 3),terrain,,land,false,,,,,2026-05-05T11:39:51+00:00
+gfx_00732_tile_37f2_direct_eff_411_slot_411_37f2_direct.png,00732,411,411,32,22,forest (growth stage 4),terrain,,land,false,,,,,2026-05-05T11:40:00+00:00
+gfx_00734_tile_37f2_direct_eff_412_slot_412_37f2_direct.png,00734,412,412,32,22,forest (growth stage 5),terrain,,land,false,,,,,2026-05-05T11:40:12+00:00
+gfx_00736_tile_37f2_direct_eff_413_slot_413_37f2_direct.png,00736,413,413,32,22,forest (growth stage 6),terrain,,land,false,,,,,2026-05-05T11:40:25+00:00
+gfx_00738_tile_37f2_direct_eff_414_slot_414_37f2_direct.png,00738,414,414,32,20,unknown,unknown,,,false,,,,possibly a UFO?,2026-05-05T11:40:51+00:00
+gfx_00740_tile_37f2_direct_eff_415_slot_415_37f2_direct.png,00740,415,415,32,12,birds,decoration,,unknown,false,,,,bird sprites. not sure where these should be rendered,2026-05-05T11:41:17+00:00
+gfx_00742_tile_37f2_direct_eff_416_slot_416_37f2_direct.png,00742,416,416,32,24,fireworks (stage 7),decoration,,,false,,,,this is the fireworks 'falling back to earth'; probably rendered below the previous frames,2026-05-05T11:46:29+00:00
+gfx_00744_tile_37f2_direct_eff_421_slot_420_37f2_direct.png,00744,421,420,32,18,blimp,decoration,,unknown,false,,,,blimp. assume this is supposed to fly across the screen,2026-05-05T11:41:53+00:00
+gfx_00746_tile_37f2_direct_eff_422_slot_422_37f2_direct.png,00746,422,422,32,18,small houses A,building,,land,false,,,,,2026-05-05T11:46:42+00:00
+gfx_00748_tile_37f2_direct_eff_423_slot_423_37f2_direct.png,00748,423,423,32,20,small houses B,building,,land,false,,,,,2026-05-05T11:46:53+00:00
+gfx_00750_tile_37f2_direct_eff_424_slot_424_37f2_direct.png,00750,424,424,32,26,fireworks (stage 6),decoration,,,false,,,,,2026-05-05T11:45:55+00:00
+gfx_00752_tile_37f2_direct_eff_425_slot_425_37f2_direct.png,00752,425,425,32,26,fireworks (stage 5),decoration,,,false,,,,,2026-05-05T11:45:44+00:00
+gfx_00754_tile_37f2_direct_eff_426_slot_426_37f2_direct.png,00754,426,426,32,24,fireworks (stage 4),decoration,,,false,,,,,2026-05-05T11:45:23+00:00
+gfx_00756_tile_37f2_direct_eff_427_slot_427_37f2_direct.png,00756,427,427,32,16,fireworks (stage 3),decoration,,,false,,,,,2026-05-05T11:44:48+00:00
+gfx_00758_tile_37f2_direct_eff_428_slot_428_37f2_direct.png,00758,428,428,32,12,fireworks (stage 2),decoration,,,false,,,,first frame of rocket exploding,2026-05-05T11:44:32+00:00
+gfx_00760_tile_37f2_direct_eff_429_slot_429_37f2_direct.png,00760,429,429,32,6,fireworks (stage 1),decoration,,,false,,,,this is the rocket shooting up. assume subsequent stages are supposed to render above this.,2026-05-05T11:44:30+00:00
+gfx_00762_tile_37f2_direct_eff_430_slot_430_37f2_direct.png,00762,430,430,32,20,small houses C,building,,land,false,,,,,2026-05-05T11:47:02+00:00
+gfx_00764_tile_37f2_direct_eff_431_slot_431_37f2_direct.png,00764,431,431,32,16,small houses D,building,,land,false,,,,,2026-05-05T11:47:13+00:00
+gfx_00766_tile_37f2_direct_eff_432_slot_432_37f2_direct.png,00766,432,432,32,28,midrise offices A,building,,land,false,,,,,2026-05-05T11:47:40+00:00
+gfx_00768_tile_37f2_direct_eff_433_slot_433_37f2_direct.png,00768,433,433,32,22,midrise offices B,building,,land,false,,,,,2026-05-05T11:47:53+00:00
+gfx_00770_tile_37f2_direct_eff_434_slot_434_37f2_direct.png,00770,434,434,32,20,midrise offices C,building,,land,false,,,,,2026-05-05T11:48:02+00:00
+gfx_00772_tile_37f2_direct_eff_435_slot_435_37f2_direct.png,00772,435,435,32,24,midrise offices D,building,,land,false,,,,,2026-05-05T11:48:12+00:00
+gfx_00774_tile_37f2_direct_eff_436_slot_436_37f2_direct.png,00774,436,436,32,24,midrise offices E,building,,land,false,,,,,2026-05-05T11:48:38+00:00
+gfx_00776_tile_37f2_direct_eff_440_slot_440_37f2_direct.png,00776,440,440,32,16,up arrow,ui,,,false,,,N,,2026-05-05T11:49:06+00:00
+gfx_00778_tile_37f2_direct_eff_441_slot_441_37f2_direct.png,00778,441,441,32,12,up-left arrow,ui,,,false,,,NW,,2026-05-05T11:49:36+00:00
+gfx_00780_tile_37f2_direct_eff_442_slot_442_37f2_direct.png,00780,442,442,32,10,left arrow,ui,,,false,,,W,,2026-05-05T11:49:32+00:00
+gfx_00782_tile_37f2_direct_eff_443_slot_443_37f2_direct.png,00782,443,443,32,12,down-left arrow,,,,false,,,SW,,2026-05-05T11:49:28+00:00
+gfx_00784_tile_37f2_direct_eff_444_slot_444_37f2_direct.png,00784,444,444,32,16,down arrow,ui,,,false,,,S,,2026-05-05T11:50:18+00:00
+gfx_00786_tile_37f2_direct_eff_472_slot_472_37f2_direct.png,00786,472,472,32,16,misc vegetation A,terrain,,land,false,,,,,2026-05-05T11:53:00+00:00
+gfx_00788_tile_37f2_direct_eff_473_slot_473_37f2_direct.png,00788,473,473,32,16,misc vegetation with small building?,building,,land,false,,,,,2026-05-05T11:53:26+00:00
+gfx_00790_tile_37f2_direct_eff_474_slot_474_37f2_direct.png,00790,474,474,32,16,misc vegetation B,terrain,,land,false,,,,,2026-05-05T11:53:39+00:00
+gfx_00792_tile_37f2_direct_eff_475_slot_475_37f2_direct.png,00792,475,475,32,16,misc vegetation C,terrain,,land,false,,,,,2026-05-05T11:54:14+00:00
+gfx_00794_tile_37f2_direct_eff_476_slot_476_37f2_direct.png,00794,476,476,32,16,misc vegetation D,terrain,,land,false,,,,,2026-05-05T11:54:33+00:00
+gfx_00796_tile_37f2_direct_eff_477_slot_477_37f2_direct.png,00796,477,477,32,16,misc vegetation E,terrain,,land,false,,,,,2026-05-05T11:54:36+00:00
+gfx_00798_tile_37f2_direct_eff_492_slot_492_37f2_direct.png,00798,492,492,32,22,baseball stadium (back),building,,land,false,SE|S|SW,,,,2026-05-05T12:00:48+00:00
+gfx_00800_tile_37f2_direct_eff_493_slot_493_37f2_direct.png,00800,493,493,32,26,baseball stadium (left),building,,land,false,NE|E|SE,,,,2026-05-05T12:01:08+00:00
+gfx_00802_tile_37f2_direct_eff_494_slot_494_37f2_direct.png,00802,494,494,32,30,baseball stadium (right),building,,land,false,SW|W|NW,,,,2026-05-05T12:01:40+00:00
+gfx_00804_tile_37f2_direct_eff_495_slot_495_37f2_direct.png,00804,495,495,32,30,baseball stadium (front),building,,land,false,N|NE|NW,,,,2026-05-05T12:02:03+00:00
+gfx_00806_tile_37f2_direct_eff_496_slot_496_37f2_direct.png,00806,496,496,32,22,rollercoaster (left),decoration,,land,false,SE,,,,2026-05-05T12:02:59+00:00
+gfx_00808_tile_37f2_direct_eff_497_slot_497_37f2_direct.png,00808,497,497,32,32,ferris wheel,building,,land,false,,,,,2026-05-05T12:02:47+00:00
+gfx_00810_tile_37f2_direct_eff_498_slot_498_37f2_direct.png,00810,498,498,32,18,rollercoaster (right),decoration,,land,false,NW,,,,2026-05-05T12:03:14+00:00
+gfx_00812_tile_37f2_direct_eff_499_slot_499_37f2_direct.png,00812,499,499,32,22,merry-go-round,decoration,,land,false,,,,,2026-05-05T12:03:25+00:00
+gfx_00814_tile_37f2_direct_eff_500_slot_500_37f2_direct.png,00814,500,500,32,20,theme park section,decoration,,land,false,,,,,2026-05-05T12:03:52+00:00
+gfx_00816_tile_37f2_direct_eff_501_slot_501_37f2_direct.png,00816,501,501,32,20,theme park large building,building,,land,false,,,,,2026-05-05T12:06:15+00:00
