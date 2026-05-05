@@ -141,8 +141,8 @@ gfx_00462_tile_37f2_direct_eff_212_slot_212_37f2_direct.png,00462,212,212,32,30,
 gfx_00464_tile_37f2_direct_eff_213_slot_213_37f2_direct.png,00464,213,213,32,30,platform with piers (for multilevel stations?),building,rail,land,false,SE|NW,,,platform connects to NW and SE. piers are NE and SW,2026-05-05T09:24:11+00:00
 gfx_00466_tile_37f2_direct_eff_214_slot_214_37f2_direct.png,00466,214,214,32,16,runway corner with surrounding grass,decoration,,land,false,NE,,,,2026-05-05T09:24:36+00:00
 gfx_00468_tile_37f2_direct_eff_215_slot_215_37f2_direct.png,00468,215,215,32,16,runway corner with surrounding grass,decoration,,land,false,NW,,,,2026-05-05T09:24:53+00:00
-gfx_00476_tile_37f2_direct_eff_220_slot_220_37f2_direct.png,00476,220,220,32,26,petrol station?,road,road,land,false,NW,,,petrol station that I think connects to the NW,2026-05-05T09:26:13+00:00
-gfx_00478_tile_37f2_direct_eff_221_slot_221_37f2_direct.png,00478,221,221,32,24,petrol station?,road,road,land,false,SW,,,petrol station that I think connects to the SW,2026-05-05T09:26:21+00:00
+gfx_00476_tile_37f2_direct_eff_220_slot_220_37f2_direct.png,00476,220,220,32,26,bus station,road,road,land,false,NW,,,bus station that I think connects to the NW,2026-05-05T09:26:13+00:00
+gfx_00478_tile_37f2_direct_eff_221_slot_221_37f2_direct.png,00478,221,221,32,24,bus station,road,road,land,false,SW,,,bus station that I think connects to the SW,2026-05-05T09:26:21+00:00
 gfx_00480_tile_37f2_direct_eff_224_slot_224_37f2_direct.png,00480,224,224,32,22,house with red roof,building,,land,false,,,,,2026-05-05T09:26:59+00:00
 gfx_00482_tile_37f2_direct_eff_225_slot_225_37f2_direct.png,00482,225,225,32,24,house with light blue roof,building,,land,false,,,,,2026-05-05T09:27:45+00:00
 gfx_00484_tile_37f2_direct_eff_226_slot_226_37f2_direct.png,00484,226,226,32,24,house with grey roof,building,,land,false,,,,,2026-05-05T09:27:21+00:00
