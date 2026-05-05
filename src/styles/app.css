@@ -49,7 +49,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   display: grid;
   grid-template-columns: 54px 1fr 320px;
   grid-template-rows: 52px 1fr;
-  background: #426d8c;
+  background: #336688;
 }
 .topbar {
   grid-column: 1 / -1;

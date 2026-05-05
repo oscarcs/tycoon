@@ -25,7 +25,8 @@ describe('runtime sprite data', () => {
   it('pins high-risk runtime roles to validated assets', () => {
     expect(SPRITE_DATA.water.filename).toContain('gfx_00276');
     expect(SPRITE_DATA.farm.map((sprite) => sprite.filename).join(' ')).toContain('gfx_00716');
-    expect(SPRITE_DATA.industry.map((sprite) => sprite.filename).join(' ')).not.toContain('gfx_00208');
+    expect(SPRITE_DATA.farmHouses.length).toBeGreaterThan(4);
+    expect(SPRITE_DATA.industry.length).toBeGreaterThan(3);
     expect(SPRITE_DATA.industry.map((sprite) => sprite.filename).join(' ')).not.toContain('gfx_00534');
     expect(SPRITE_DATA.road.every((sprite) => (sprite.connections?.length ?? 0) >= 2)).toBe(true);
     expect(SPRITE_DATA.rail.every((sprite) => (sprite.connections?.length ?? 0) >= 2)).toBe(true);

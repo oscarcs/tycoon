@@ -1,6 +1,6 @@
 import { buildingName, stationName } from './names';
 import { Rng } from './random';
-import { linePoints, linePoints8 } from './geometry';
+import { linePoints, linePoints8, type TilePoint } from './geometry';
 import { findRailPath, tileAt } from './pathfinding';
 import type { GameState, Overlay, Station, Tile, Tool, Train, Zone } from './types';
 
@@ -18,12 +18,10 @@ interface TownCenter {
 export function createGame(seed = `tycoon-${Date.now()}`): GameState {
   const rng = new Rng(seed);
   const tiles: Tile[] = [];
-  const centers = createTownCenters(rng);
+  const centers = createTownCenters(rng, seed);
   for (let y = 0; y < MAP_H; y += 1) {
     for (let x = 0; x < MAP_W; x += 1) {
-      const nx = x / MAP_W - 0.5;
-      const ny = y / MAP_H - 0.5;
-      const island = 0.52 - Math.sqrt(nx * nx + ny * ny) + fbm(x, y, seed) * 0.17;
+      const island = islandScore(x, y, seed);
       const farmPatch = fbm(x + 1800, y - 900, `${seed}:farms`);
       let terrain: Tile['terrain'] = island < 0.01 ? 'water' : island < 0.065 ? 'coast' : rng.chance(0.09) ? 'forest' : farmPatch > 0.1 || (farmPatch > -0.04 && rng.chance(0.42)) ? 'farm' : 'land';
       let zone: Zone = 'none';
@@ -68,7 +66,7 @@ export function createGame(seed = `tycoon-${Date.now()}`): GameState {
   return state;
 }
 
-function createTownCenters(rng: Rng): TownCenter[] {
+function createTownCenters(rng: Rng, seed: string): TownCenter[] {
   const centers: TownCenter[] = [];
   const targetCenters = Math.round(8 * (MAP_W / 112));
   let attempts = 0;
@@ -80,6 +78,7 @@ function createTownCenters(rng: Rng): TownCenter[] {
       power: rng.int(5, centers.length < 2 ? 9 : 7),
       rank: centers.length + 1,
     };
+    if (islandScore(candidate.x, candidate.y, seed) < 0.11) continue;
     if (centers.some((center) => Math.hypot(center.x - candidate.x, center.y - candidate.y) < center.power + candidate.power + 9)) continue;
     centers.push(candidate);
   }
@@ -107,31 +106,18 @@ function makeTile(rng: Rng, x: number, y: number, terrain: Tile['terrain'], zone
 function seedTownRoads(state: GameState, centers: TownCenter[]): void {
   const rng = new Rng(`${state.seed}:roads`);
   for (const center of centers) {
-    const radius = Math.max(4, Math.floor(center.power * 0.72));
-    const verticals = irregularOffsets(rng, radius).map((offset) => center.x + offset);
-    const horizontals = irregularOffsets(rng, radius).map((offset) => center.y + offset);
-    for (const x of verticals) {
-      const slackTop = rng.int(0, 2);
-      const slackBottom = rng.int(0, 2);
-      for (let y = center.y - radius + slackTop; y <= center.y + radius - slackBottom; y += 1) placeRoadTile(state, x, y, 'vertical');
-    }
-    for (const y of horizontals) {
-      const slackLeft = rng.int(0, 2);
-      const slackRight = rng.int(0, 2);
-      for (let x = center.x - radius + slackLeft; x <= center.x + radius - slackRight; x += 1) placeRoadTile(state, x, y, 'horizontal');
-    }
+    seedTownMajorRoads(state, center, rng);
   }
   for (const [a, b] of regionalRoadPairs(centers)) {
-    layRoadLine(state, a.x, a.y, b.x, b.y);
+    layRoadPath(state, a.x, a.y, b.x, b.y);
   }
 }
 
 function regionalRoadPairs(centers: TownCenter[]): Array<[TownCenter, TownCenter]> {
-  const primary = centers.slice(0, Math.min(9, centers.length));
-  const connected = primary.slice(0, 1);
-  const remaining = primary.slice(1);
+  const connected = centers.slice(0, 1);
+  const remaining = centers.slice(1);
   const pairs: Array<[TownCenter, TownCenter]> = [];
-  while (remaining.length > 0 && pairs.length < 7) {
+  while (remaining.length > 0) {
     let best: { from: TownCenter; to: TownCenter; index: number; distance: number } | undefined;
     for (const from of connected) {
       for (let index = 0; index < remaining.length; index += 1) {
@@ -140,7 +126,7 @@ function regionalRoadPairs(centers: TownCenter[]): Array<[TownCenter, TownCenter
         if (!best || distance < best.distance) best = { from, to, index, distance };
       }
     }
-    if (!best || (best.distance > 120 && pairs.length >= 4)) break;
+    if (!best) break;
     pairs.push([best.from, best.to]);
     connected.push(best.to);
     remaining.splice(best.index, 1);
@@ -148,11 +134,24 @@ function regionalRoadPairs(centers: TownCenter[]): Array<[TownCenter, TownCenter
   return pairs;
 }
 
-function irregularOffsets(rng: Rng, radius: number): number[] {
-  const offsets = [0];
-  for (let offset = rng.int(3, 5); offset < radius; offset += rng.int(4, 6)) offsets.push(offset);
-  for (let offset = -rng.int(3, 5); Math.abs(offset) < radius; offset -= rng.int(4, 6)) offsets.push(offset);
-  return offsets.sort((a, b) => a - b);
+function seedTownMajorRoads(state: GameState, center: TownCenter, rng: Rng): void {
+  const radius = Math.max(3, Math.floor(center.power * 0.58));
+  const verticalTop = rng.int(0, 2);
+  const verticalBottom = rng.int(0, 2);
+  const horizontalLeft = rng.int(0, 2);
+  const horizontalRight = rng.int(0, 2);
+  for (let y = center.y - radius + verticalTop; y <= center.y + radius - verticalBottom; y += 1) placeRoadTile(state, center.x, y, 'vertical');
+  for (let x = center.x - radius + horizontalLeft; x <= center.x + radius - horizontalRight; x += 1) placeRoadTile(state, x, center.y, 'horizontal');
+
+  if (center.rank > 8 || center.power < 7 || !rng.chance(0.42)) return;
+  const offset = rng.pick([-5, -4, 4, 5]);
+  if (rng.chance(0.5)) {
+    const y = center.y + offset;
+    for (let x = center.x - Math.max(2, radius - 1); x <= center.x + Math.max(2, radius - 1); x += 1) placeRoadTile(state, x, y, 'horizontal', true);
+  } else {
+    const x = center.x + offset;
+    for (let y = center.y - Math.max(2, radius - 1); y <= center.y + Math.max(2, radius - 1); y += 1) placeRoadTile(state, x, y, 'vertical', true);
+  }
 }
 
 function seedStarterRail(state: GameState, rng: Rng, centers: TownCenter[]): void {
@@ -165,7 +164,23 @@ function seedStarterRail(state: GameState, rng: Rng, centers: TownCenter[]): voi
   layLine(state, a.x, a.y, b.x, b.y, 'rail', 0, true);
   placeStation(state, a.x, a.y, rng);
   placeStation(state, b.x, b.y, rng);
+  seedStationRoadBypass(state, a.x, a.y);
+  seedStationRoadBypass(state, b.x, b.y);
   addTrain(state);
+}
+
+function seedStationRoadBypass(state: GameState, x: number, y: number): void {
+  placeRoadPoints(state, [
+    { x, y: y - 1 },
+    { x: x + 1, y: y - 1 },
+    { x: x + 1, y },
+    { x: x + 1, y: y + 1 },
+    { x, y: y + 1 },
+    { x: x - 1, y: y + 1 },
+    { x: x - 1, y },
+    { x: x - 1, y: y - 1 },
+    { x, y: y - 1 },
+  ]);
 }
 
 function seedIndustrialDistricts(state: GameState, centers: TownCenter[], rng: Rng): void {
@@ -291,12 +306,60 @@ function layLine(state: GameState, ax: number, ay: number, bx: number, by: numbe
 }
 
 function layRoadLine(state: GameState, ax: number, ay: number, bx: number, by: number): void {
-  let previous = { x: ax, y: ay };
-  for (const point of linePoints(ax, ay, bx, by)) {
-    const axis = Math.abs(point.x - previous.x) > 0 ? 'horizontal' : 'vertical';
+  placeRoadPoints(state, linePoints(ax, ay, bx, by));
+}
+
+function layRoadPath(state: GameState, ax: number, ay: number, bx: number, by: number): void {
+  placeRoadPoints(state, findLandPath(state, ax, ay, bx, by) ?? linePoints(ax, ay, bx, by));
+}
+
+function placeRoadPoints(state: GameState, points: TilePoint[]): void {
+  for (let index = 0; index < points.length; index += 1) {
+    const point = points[index];
+    const previous = points[Math.max(0, index - 1)];
+    const next = points[Math.min(points.length - 1, index + 1)];
+    const axis = Math.abs(next.x - previous.x) >= Math.abs(next.y - previous.y) ? 'horizontal' : 'vertical';
     placeRoadTile(state, point.x, point.y, axis);
-    previous = point;
   }
+}
+
+function findLandPath(state: GameState, ax: number, ay: number, bx: number, by: number): TilePoint[] | undefined {
+  const start = tileAt(state, ax, ay);
+  const goal = tileAt(state, bx, by);
+  if (!start || !goal || start.terrain === 'water' || goal.terrain === 'water') return undefined;
+  const startIndex = ay * state.width + ax;
+  const goalIndex = by * state.width + bx;
+  const cameFrom = new Int32Array(state.width * state.height);
+  cameFrom.fill(-1);
+  cameFrom[startIndex] = startIndex;
+  const queue = [startIndex];
+  let head = 0;
+  while (head < queue.length) {
+    const current = queue[head++];
+    if (current === goalIndex) break;
+    const x = current % state.width;
+    const y = Math.floor(current / state.width);
+    for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx < 0 || ny < 0 || nx >= state.width || ny >= state.height) continue;
+      const nextIndex = ny * state.width + nx;
+      if (cameFrom[nextIndex] !== -1) continue;
+      const next = tileAt(state, nx, ny);
+      if (!next || next.terrain === 'water') continue;
+      cameFrom[nextIndex] = current;
+      queue.push(nextIndex);
+    }
+  }
+  if (cameFrom[goalIndex] === -1) return undefined;
+  const path: TilePoint[] = [];
+  let cursor = goalIndex;
+  while (cursor !== startIndex) {
+    path.push({ x: cursor % state.width, y: Math.floor(cursor / state.width) });
+    cursor = cameFrom[cursor];
+  }
+  path.push({ x: ax, y: ay });
+  return path.reverse();
 }
 
 function placeRoadTile(state: GameState, x: number, y: number, axis: 'horizontal' | 'vertical', avoidParallel = false): void {
@@ -324,6 +387,7 @@ function wouldCreateParallelRoad(state: GameState, x: number, y: number, axis: '
 }
 
 function overlayWithCrossing(current: Overlay, next: 'rail' | 'road'): Overlay {
+  if (current === 'crossing') return 'crossing';
   if ((current === 'rail' && next === 'road') || (current === 'road' && next === 'rail')) return 'crossing';
   return next;
 }
@@ -618,4 +682,10 @@ function fbm(x: number, y: number, seed: string): number {
   const b = new Rng(`${seed}:b:${Math.floor(x / 19)}:${Math.floor(y / 19)}`).next();
   const c = new Rng(`${seed}:c:${Math.floor(x / 37)}:${Math.floor(y / 37)}`).next();
   return (a * 0.5 + b * 0.32 + c * 0.18) - 0.5;
+}
+
+function islandScore(x: number, y: number, seed: string): number {
+  const nx = x / MAP_W - 0.5;
+  const ny = y / MAP_H - 0.5;
+  return 0.52 - Math.sqrt(nx * nx + ny * ny) + fbm(x, y, seed) * 0.17;
 }

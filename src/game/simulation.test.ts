@@ -39,6 +39,27 @@ describe('simulation', () => {
     expect(path).toEqual(['30,30', '31,31', '32,32', '33,33', '34,34']);
   });
 
+  it('generates one connected major-road network', () => {
+    const game = createGame('road-connectivity-test');
+    const roadTiles = game.tiles.filter((tile) => tile.overlay === 'road' || tile.overlay === 'crossing');
+    expect(roadTiles.length).toBeGreaterThan(50);
+    const roadKeys = new Set(roadTiles.map((tile) => `${tile.x},${tile.y}`));
+    const queue = [roadTiles[0]];
+    const seen = new Set<string>();
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      const key = `${current.x},${current.y}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+        const nextKey = `${current.x + dx},${current.y + dy}`;
+        const next = roadKeys.has(nextKey) ? tileAt(game, current.x + dx, current.y + dy) : undefined;
+        if (next) queue.push(next);
+      }
+    }
+    expect(seen.size).toBe(roadTiles.length);
+  });
+
   it('builds v1 special infrastructure procedurally', () => {
     let game = createGame('special-builds');
     const shore = game.tiles.find((tile) => tile.terrain !== 'water' && game.tiles.some((other) => other.terrain === 'water' && Math.hypot(other.x - tile.x, other.y - tile.y) <= 2))!;

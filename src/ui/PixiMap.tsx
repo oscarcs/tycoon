@@ -23,7 +23,9 @@ interface PixiCatalog {
   base: Texture;
   water: Texture;
   farm: Texture[];
-  farmHouse: Texture;
+  shoreBase: Record<ShoreHalf, Texture>;
+  shoreFarm: Array<Record<ShoreHalf, Texture>>;
+  farmHouses: Texture[];
   forest: Texture[];
   roadByKey: Record<string, TextureAsset>;
   railByKey: Record<string, TextureAsset>;
@@ -48,6 +50,11 @@ interface VisibleTile {
   y: number;
 }
 
+interface ShoreTile {
+  half: ShoreHalf;
+  landTile: Tile;
+}
+
 interface PixiLayers {
   staticLayer: Container;
   dynamicLayer: Container;
@@ -63,7 +70,26 @@ type RenderStatsWindow = Window & {
   };
 };
 
+type ShoreHalf = 'N-S' | 'S-N' | 'E-W' | 'W-E';
+
+const SHORE_HALVES: ShoreHalf[] = ['N-S', 'S-N', 'E-W', 'W-E'];
 const DIR_ORDER: Direction[] = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+const SHORE_NEIGHBOR_OFFSETS: Record<Direction, { dx: number; dy: number }> = {
+  N: { dx: -1, dy: -1 },
+  NE: { dx: 0, dy: -1 },
+  E: { dx: 1, dy: -1 },
+  SE: { dx: 1, dy: 0 },
+  S: { dx: 1, dy: 1 },
+  SW: { dx: 0, dy: 1 },
+  W: { dx: -1, dy: 1 },
+  NW: { dx: -1, dy: 0 },
+};
+const SHORE_GROUPS: Array<{ half: ShoreHalf; primary: Direction; dirs: Direction[] }> = [
+  { half: 'E-W', primary: 'W', dirs: ['W', 'NW', 'SW'] },
+  { half: 'W-E', primary: 'E', dirs: ['E', 'NE', 'SE'] },
+  { half: 'S-N', primary: 'N', dirs: ['N', 'NE', 'NW'] },
+  { half: 'N-S', primary: 'S', dirs: ['S', 'SE', 'SW'] },
+];
 const ROAD_DIRS: Array<{ dx: number; dy: number; dir: Direction }> = [
   { dx: 0, dy: -1, dir: 'NE' },
   { dx: 1, dy: 0, dir: 'SE' },
@@ -80,7 +106,7 @@ const RAIL_DIRS: Array<{ dx: number; dy: number; dir: Direction }> = [
   { dx: -1, dy: 1, dir: 'W' },
   { dx: -1, dy: 0, dir: 'NW' },
 ];
-const WATER_BACKGROUND = 0x426d8c;
+const WATER_BACKGROUND = 0x336688;
 
 export function PixiMap({ game, tool, camera, onCameraChange, onApplyTool, onApplyToolLine }: PixiMapProps) {
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -385,19 +411,19 @@ function mixString(hash: number, value: string): number {
 }
 
 function drawTerrain(scene: Container, state: GameState, tile: Tile, sprites: PixiCatalog, x: number, y: number, zoom: number): void {
-  if (tile.terrain === 'water') {
-    addSprite(scene, sprites.water, x, y, zoom);
+  if (isWaterLike(tile)) {
+    const shore = shoreTileForWater(state, tile);
+    if (shore) addSprite(scene, shoreTextureFor(shore.landTile, sprites, shore.half), x, y, zoom);
+    else addSprite(scene, sprites.water, x, y, zoom);
     return;
   }
-  const waterDir = neighborDirs(state, tile, (candidate) => candidate.terrain === 'water')[0];
   const landTexture = landTextureFor(tile, sprites);
-  if (waterDir) {
-    addSprite(scene, sprites.water, x, y, zoom);
-    addMaskedSprite(scene, landTexture, x, y, zoom, landHalfPoints(x, y, zoom, waterDir), 1, farmFlipX(tile), farmFlipY(tile));
+  if (tile.terrain === 'farm') {
+    addSprite(scene, landTexture, x, y, zoom, 1, farmFlipX(tile));
   } else {
-    addSprite(scene, landTexture, x, y, zoom, 1, farmFlipX(tile), farmFlipY(tile));
+    addSprite(scene, landTexture, x, y, zoom);
   }
-  if (tile.terrain === 'farm' && tile.zone === 'none' && tile.overlay === 'none' && shouldDrawFarmHouse(tile)) addSprite(scene, sprites.farmHouse, x, y, zoom);
+  if (tile.terrain === 'farm' && tile.zone === 'none' && tile.overlay === 'none' && shouldDrawFarmHouse(tile)) addSprite(scene, pick(sprites.farmHouses, tile, 71), x, y, zoom);
 }
 
 function drawDevelopment(scene: Container, state: GameState, tile: Tile, sprites: PixiCatalog, x: number, y: number, zoom: number): void {
@@ -440,7 +466,7 @@ function drawAutotile(scene: Container, state: GameState, tile: Tile, sprites: R
   const dirs = connectionDirs(state, tile, type, previewSet, previewOverlay);
   const key = connectionKey(dirs);
   const asset = sprites[key] ?? sprites[fallbackConnectionKey(dirs, type)] ?? fallbackAsset(sprites, dirs, type);
-  if (asset) addAsset(scene, asset, x, y, zoom, alpha);
+  if (asset) addAsset(scene, asset, type, x, y, zoom, alpha);
 }
 
 function drawSelection(scene: Container, x: number, y: number, zoom: number, color: number, alpha: number): void {
@@ -461,16 +487,17 @@ function landTextureFor(tile: Tile, sprites: PixiCatalog): Texture | undefined {
   return tile.terrain === 'farm' ? pick(sprites.farm, tile, 2) : sprites.base;
 }
 
+function shoreTextureFor(tile: Tile, sprites: PixiCatalog, half: ShoreHalf): Texture {
+  if (tile.terrain !== 'farm') return sprites.shoreBase[half];
+  return sprites.shoreFarm[variantIndex(tile, sprites.shoreFarm.length, 2)]?.[half] ?? sprites.shoreBase[half];
+}
+
 function shouldDrawFarmHouse(tile: Tile): boolean {
-  return variantIndex(tile, 11, 93) === 0;
+  return variantIndex(tile, 89, 93) === 0;
 }
 
 function farmFlipX(tile: Tile): boolean {
   return tile.terrain === 'farm' && variantIndex(tile, 2, 17) === 1;
-}
-
-function farmFlipY(tile: Tile): boolean {
-  return tile.terrain === 'farm' && variantIndex(tile, 3, 29) === 1;
 }
 
 function addSprite(scene: Container, texture: Texture | undefined, x: number, y: number, zoom: number, alpha = 1, flipX = false, flipY = false): Sprite | undefined {
@@ -490,18 +517,13 @@ function addSprite(scene: Container, texture: Texture | undefined, x: number, y:
   return sprite;
 }
 
-function addMaskedSprite(scene: Container, texture: Texture | undefined, x: number, y: number, zoom: number, maskPoints: number[], alpha = 1, flipX = false, flipY = false): void {
-  const sprite = addSprite(scene, texture, x, y, zoom, alpha, flipX, flipY);
-  if (!sprite) return;
-  const mask = new Graphics().poly(maskPoints).fill(0xffffff);
-  mask.renderable = false;
-  sprite.mask = mask;
-  scene.addChild(mask);
-}
-
-function addAsset(scene: Container, asset: TextureAsset, x: number, y: number, zoom: number, alpha: number): void {
+function addAsset(scene: Container, asset: TextureAsset, type: 'rail' | 'road', x: number, y: number, zoom: number, alpha: number): void {
   const sprite = new Sprite(asset.texture);
-  if (asset.flipX || asset.flipY) {
+  if (type === 'rail') {
+    sprite.anchor.set(0.5, 0.5);
+    sprite.position.set(Math.round(x), Math.round(y));
+    sprite.scale.set(asset.flipX ? -zoom : zoom, asset.flipY ? -zoom : zoom);
+  } else if (asset.flipX || asset.flipY) {
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(Math.round(x), Math.round(y - asset.texture.height * zoom / 2 + TILE_H * zoom / 2));
     sprite.scale.set(asset.flipX ? -zoom : zoom, asset.flipY ? -zoom : zoom);
@@ -592,7 +614,7 @@ function isRailish(overlay: Overlay): boolean {
 }
 
 function nearWater(state: GameState, tile: Tile): boolean {
-  return neighborDirs(state, tile, (candidate) => candidate.terrain === 'water').length > 0;
+  return neighborDirs(state, tile, isWaterLike).length > 0;
 }
 
 function tileAtLocal(state: GameState, x: number, y: number): Tile | undefined {
@@ -611,6 +633,7 @@ function warehousePart(state: GameState, tile: Tile): 'roof' | 'front' | 'wallRo
     tileAtLocal(state, ox + 1, oy + 1),
   ];
   if (!block.every((candidate) => candidate?.zone === 'industrial' && candidate.development >= 2 && candidate.overlay === 'none')) return undefined;
+  if (variantIndex(block[0]!, 2, 211) === 1) return undefined;
   const px = tile.x - ox;
   const py = tile.y - oy;
   if (py === 0 && px === 0) return 'roof';
@@ -619,15 +642,33 @@ function warehousePart(state: GameState, tile: Tile): 'roof' | 'front' | 'wallRo
   return 'wallFront';
 }
 
-function landHalfPoints(x: number, y: number, zoom: number, waterDir: Direction): number[] {
-  const top = [x, y - TILE_H * zoom / 2];
-  const right = [x + TILE_W * zoom / 2, y];
-  const bottom = [x, y + TILE_H * zoom / 2];
-  const left = [x - TILE_W * zoom / 2, y];
-  if (waterDir === 'NE') return [...left, ...right, ...bottom];
-  if (waterDir === 'SE') return [...top, ...bottom, ...left];
-  if (waterDir === 'SW') return [...top, ...right, ...left];
-  return [...top, ...right, ...bottom];
+function shoreTileForWater(state: GameState, tile: Tile): ShoreTile | undefined {
+  if (!isWaterLike(tile)) return undefined;
+  let best: { half: ShoreHalf; landTile: Tile; score: number } | undefined;
+  for (const group of SHORE_GROUPS) {
+    const primary = tileInDirection(state, tile, group.primary);
+    const primaryLand = primary && isLandLike(primary) ? primary : undefined;
+    const landTiles = group.dirs
+      .map((dir) => tileInDirection(state, tile, dir))
+      .filter((candidate): candidate is Tile => Boolean(candidate && isLandLike(candidate)));
+    if (!primaryLand || landTiles.length < group.dirs.length) continue;
+    const score = landTiles.length * 10 + (primaryLand ? 4 : 0);
+    if (!best || score > best.score) best = { half: group.half, landTile: primaryLand, score };
+  }
+  return best;
+}
+
+function tileInDirection(state: GameState, tile: Tile, dir: Direction): Tile | undefined {
+  const offset = SHORE_NEIGHBOR_OFFSETS[dir];
+  return tileAtLocal(state, tile.x + offset.dx, tile.y + offset.dy);
+}
+
+function isWaterLike(tile: Tile): boolean {
+  return tile.terrain === 'water';
+}
+
+function isLandLike(tile: Tile): boolean {
+  return !isWaterLike(tile);
 }
 
 function pick<T>(items: T[], tile: Tile, salt = 0): T | undefined {
@@ -653,6 +694,9 @@ async function loadPixiCatalog(): Promise<PixiCatalog> {
   const defs = flattenSpriteDefs(SPRITE_DATA);
   const paths = [...new Set(defs.map(spritePath))];
   await Promise.all(paths.map((path) => Assets.load(path)));
+  const waterImage = await loadImage(spritePath(SPRITE_DATA.water));
+  const baseImage = await loadImage(spritePath(SPRITE_DATA.base));
+  const farmImages = await Promise.all(SPRITE_DATA.farm.map((def) => loadImage(spritePath(def))));
   const texture = (def: SpriteDef) => {
     const result = Texture.from(spritePath(def));
     result.source.scaleMode = 'nearest';
@@ -662,7 +706,9 @@ async function loadPixiCatalog(): Promise<PixiCatalog> {
     base: texture(SPRITE_DATA.base),
     water: texture(SPRITE_DATA.water),
     farm: SPRITE_DATA.farm.map(texture),
-    farmHouse: texture(SPRITE_DATA.farmHouse),
+    shoreBase: createShoreTextures(waterImage, baseImage),
+    shoreFarm: farmImages.map((farmImage) => createShoreTextures(waterImage, farmImage)),
+    farmHouses: SPRITE_DATA.farmHouses.map(texture),
     forest: SPRITE_DATA.forest.map(texture),
     roadByKey: loadTextureMap(SPRITE_DATA.road, texture),
     railByKey: loadTextureMap(SPRITE_DATA.rail, texture),
@@ -685,6 +731,52 @@ async function loadPixiCatalog(): Promise<PixiCatalog> {
     },
     purchased: texture(SPRITE_DATA.purchased),
   };
+}
+
+function loadImage(path: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`Unable to load ${path}`));
+    image.src = path;
+  });
+}
+
+function createShoreTextures(water: CanvasImageSource, land: CanvasImageSource): Record<ShoreHalf, Texture> {
+  return Object.fromEntries(SHORE_HALVES.map((half) => [half, createShoreTexture(water, land, half)])) as Record<ShoreHalf, Texture>;
+}
+
+function createShoreTexture(water: CanvasImageSource, land: CanvasImageSource, half: ShoreHalf): Texture {
+  const canvas = document.createElement('canvas');
+  canvas.width = TILE_W;
+  canvas.height = TILE_H;
+  const context = canvas.getContext('2d');
+  if (!context) return Texture.EMPTY;
+  context.imageSmoothingEnabled = false;
+  context.drawImage(water, 0, 0);
+  context.save();
+  const points = shoreLandTexturePoints(half);
+  context.beginPath();
+  context.moveTo(points[0][0], points[0][1]);
+  for (const [x, y] of points.slice(1)) context.lineTo(x, y);
+  context.closePath();
+  context.clip();
+  context.drawImage(land, 0, 0);
+  context.restore();
+  const result = Texture.from(canvas);
+  result.source.scaleMode = 'nearest';
+  return result;
+}
+
+function shoreLandTexturePoints(half: ShoreHalf): Array<[number, number]> {
+  const top: [number, number] = [TILE_W / 2, 0];
+  const right: [number, number] = [TILE_W, TILE_H / 2];
+  const bottom: [number, number] = [TILE_W / 2, TILE_H];
+  const left: [number, number] = [0, TILE_H / 2];
+  if (half === 'N-S') return [left, right, bottom];
+  if (half === 'S-N') return [top, right, left];
+  if (half === 'E-W') return [top, bottom, left];
+  return [top, right, bottom];
 }
 
 function loadTextureMap(sprites: SpriteDef[], texture: (def: SpriteDef) => Texture): Record<string, TextureAsset> {

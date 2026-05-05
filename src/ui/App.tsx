@@ -372,7 +372,7 @@ function minimapColor(tile: Tile): [number, number, number] {
   if (tile.zone === 'residential') return [217, 200, 137];
   if (tile.zone === 'commercial') return [138, 176, 196];
   if (tile.zone === 'industrial') return [138, 141, 140];
-  if (tile.terrain === 'water') return [79, 131, 165];
+  if (tile.terrain === 'water') return [51, 102, 136];
   if (tile.terrain === 'coast') return [181, 177, 122];
   if (tile.terrain === 'forest') return [63, 122, 70];
   if (tile.terrain === 'farm') return [91, 142, 78];

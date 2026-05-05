@@ -9,7 +9,7 @@ export interface RuntimeSpriteData {
   base: SpriteDef;
   water: SpriteDef;
   farm: SpriteDef[];
-  farmHouse: SpriteDef;
+  farmHouses: SpriteDef[];
   forest: SpriteDef[];
   road: SpriteDef[];
   rail: SpriteDef[];
@@ -42,7 +42,16 @@ export const SPRITE_DATA: RuntimeSpriteData = {
     sprite('gfx_00714_tile_37f2_direct_eff_396_slot_396_37f2_direct.png'),
     sprite('gfx_00716_tile_37f2_direct_eff_398_slot_398_37f2_direct.png'),
   ],
-  farmHouse: sprite('gfx_00486_tile_37f2_direct_eff_227_slot_227_37f2_direct.png'),
+  farmHouses: [
+    sprite('gfx_00486_tile_37f2_direct_eff_227_slot_227_37f2_direct.png'),
+    sprite('gfx_00488_tile_37f2_direct_eff_228_slot_228_37f2_direct.png'),
+    sprite('gfx_00490_tile_37f2_direct_eff_229_slot_229_37f2_direct.png'),
+    sprite('gfx_00746_tile_37f2_direct_eff_422_slot_422_37f2_direct.png'),
+    sprite('gfx_00748_tile_37f2_direct_eff_423_slot_423_37f2_direct.png'),
+    sprite('gfx_00762_tile_37f2_direct_eff_430_slot_430_37f2_direct.png'),
+    sprite('gfx_00764_tile_37f2_direct_eff_431_slot_431_37f2_direct.png'),
+    sprite('gfx_00788_tile_37f2_direct_eff_473_slot_473_37f2_direct.png'),
+  ],
   forest: [
     sprite('gfx_00726_tile_37f2_direct_eff_408_slot_408_37f2_direct.png'),
     sprite('gfx_00728_tile_37f2_direct_eff_409_slot_409_37f2_direct.png'),
@@ -161,6 +170,10 @@ export const SPRITE_DATA: RuntimeSpriteData = {
   ],
   industry: [
     sprite('gfx_00206_tile_37f2_direct_eff_012_slot_012_37f2_direct.png'),
+    sprite('gfx_00208_tile_37f2_direct_eff_013_slot_013_37f2_direct.png'),
+    sprite('gfx_00210_tile_37f2_direct_eff_014_slot_014_37f2_direct.png'),
+    sprite('gfx_00212_tile_37f2_direct_eff_015_slot_015_37f2_direct.png'),
+    sprite('gfx_00214_tile_37f2_direct_eff_016_slot_016_37f2_direct.png'),
   ],
   warehouse: {
     roof: sprite('gfx_00614_tile_37f2_direct_eff_300_slot_300_37f2_direct.png'),
