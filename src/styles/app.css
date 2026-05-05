@@ -1,0 +1,128 @@
+:root {
+  color: #1e2426;
+  background: #27343a;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; overflow: hidden; }
+button, input { font: inherit; }
+button {
+  border: 1px solid #9fa8a0;
+  background: #f4efe0;
+  color: #1f2829;
+  min-height: 34px;
+  border-radius: 6px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+button:hover, button.active { background: #d9c889; border-color: #6f755f; }
+
+.menu {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(#567481cc, #27343acc), url("/source_tileset/gfx_00276_tile_37f2_direct_eff_052_slot_052_37f2_direct.png");
+  image-rendering: pixelated;
+}
+.menu-panel {
+  width: min(520px, calc(100vw - 32px));
+  background: #f6f0df;
+  border: 1px solid #828875;
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 24px 80px #0008;
+}
+.menu-panel h1 { margin: 0 0 18px; font-size: 42px; letter-spacing: 0; }
+.menu-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.save-list { margin-top: 20px; display: grid; gap: 8px; }
+
+.app-shell {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 54px 1fr 320px;
+  grid-template-rows: 52px 1fr;
+  background: #5f88a8;
+}
+.topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #f6f0df;
+  border-bottom: 1px solid #9fa8a0;
+}
+.topbar div:first-of-type { display: flex; gap: 16px; margin-right: auto; }
+.speed { display: flex; gap: 4px; }
+.speed button { min-width: 52px; }
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px;
+  background: #e5ddc9;
+  border-right: 1px solid #9fa8a0;
+}
+.toolbar button { width: 38px; height: 38px; padding: 0; }
+.game-canvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+.side-panel {
+  overflow: auto;
+  background: #f6f0df;
+  border-left: 1px solid #9fa8a0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.side-panel section {
+  border-bottom: 1px solid #d5ceb9;
+  padding-bottom: 12px;
+}
+h2 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; color: #58645d; letter-spacing: 0; }
+dl { display: grid; grid-template-columns: 92px 1fr; gap: 6px 10px; margin: 0; }
+dt { color: #66716a; }
+dd { margin: 0; font-weight: 650; min-width: 0; overflow-wrap: anywhere; }
+.minimap {
+  display: grid;
+  grid-template-columns: repeat(52, 1fr);
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid #6f755f;
+  background: #456c8b;
+}
+.minimap button {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #7b975f;
+}
+.minimap .water { background: #4f83a5; }
+.minimap .coast { background: #b5b17a; }
+.minimap .forest { background: #3f7a46; }
+.minimap button[data-zone="residential"] { background: #d9c889; }
+.minimap button[data-zone="commercial"] { background: #8ab0c4; }
+.minimap button[data-zone="industrial"] { background: #8a8d8c; }
+.minimap button[data-overlay="rail"], .minimap button[data-overlay="station"], .minimap button[data-overlay="depot"] { outline: 1px solid #272a32; z-index: 1; }
+.minimap button[data-overlay="elevatedRail"], .minimap button[data-overlay="bridge"], .minimap button[data-overlay="monorail"] { outline: 1px solid #272a32; z-index: 1; }
+.minimap button[data-overlay="port"] { background: #4f6571; }
+.minimap button[data-overlay="airport"] { background: #333940; }
+.log p, .side-panel p { margin: 5px 0; }
+.log input { width: 100%; min-height: 34px; border: 1px solid #9fa8a0; border-radius: 6px; padding: 6px; }
+
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 48px 1fr; grid-template-rows: 52px 1fr 240px; }
+  .side-panel { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #9fa8a0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

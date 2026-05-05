@@ -1,0 +1,11 @@
+Testing progress
+
+- Added Vitest coverage for deterministic seeded generation.
+- Added coverage that the starting company has debt, stations, and a reachable starter rail route.
+- Added coverage for construction tool application and clock advancement.
+- 2026-05-06 local verification: npm test passed with 4 tests.
+- 2026-05-06 local verification: npm run build passed.
+- 2026-05-06 local verification: npx wrangler deploy --dry-run --outdir .wrangler-dry-run passed and showed the TYCOON_WORLD Durable Object binding.
+- 2026-05-06 browser verification: opened http://127.0.0.1:5173 in Firefox, continued from the menu into the game, and verified visible isometric map, train, tool palette, minimap, company panel, station inspector, operations, and log.
+- 2026-05-06 browser verification: clicked Share in Firefox and verified the multiplayer log entry plus visible invite URL field.
+- 2026-05-06 browser verification: re-entered the game after adding special infrastructure and verified the expanded toolbar shows Elevated, Monorail, Bridge, Port, and Airport controls.

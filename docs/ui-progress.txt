@@ -1,0 +1,11 @@
+UI progress
+
+- Added main menu with continue, new seeded world, last save, previous local worlds, previously connected multiplayer worlds, and credits screen.
+- Added game HUD with date/time, cash, speed controls, save, and multiplayer share action.
+- Added icon-based tool palette using lucide-react for inspect, rail, road, station, depot, land purchase, residential, commercial, industrial, and bulldoze.
+- Added tool controls for elevated rail, monorail, bridge, port, and airport construction.
+- Added SimCity-style inspector showing building names, people, cargo, land value, station waiting demand, radius, and maintenance.
+- Added company financials panel with revenue, expenses, loans, and loan action.
+- Added minimap for large-map orientation and jump navigation.
+- Added operations panel with live train loads.
+- Added event log for feedback after construction, saves, loans, and multiplayer actions.

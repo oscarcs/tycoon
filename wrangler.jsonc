@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tycoon-sync",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-05-05",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TYCOON_WORLD",
+        "class_name": "TycoonWorld"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TycoonWorld"]
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

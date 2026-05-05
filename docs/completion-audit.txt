@@ -1,0 +1,49 @@
+Completion audit
+
+Objective
+
+Implement the full docs/spec.md v1 as a working browser railway tycoon game, track progress in docs text files, periodically open the game in a browser, make git commits while working, and resolve ambiguity with best judgement.
+
+Prompt-to-artifact checklist
+
+- Tech stack: React/Vite app is present in package.json, index.html, src/main.tsx, and src/ui/App.tsx.
+- Palette-swappable architecture: rendering is centralized in src/game/render.ts and tile state includes palettePhase in src/game/types.ts.
+- Isometric map rendering: src/game/render.ts defines worldToScreen/screenToWorld and draws isometric tiles on a canvas; Firefox visual check confirmed a nonblank isometric map.
+- Source tileset manifest usage: public symlinks expose source_tileset_manifest.csv and source_tileset; src/game/manifest.ts parses the CSV; src/game/render.ts loads selected PNG sprites.
+- Future elevation support: Tile.height exists; elevatedRail/bridge overlays are implemented in src/game/types.ts, src/game/simulation.ts, and src/game/render.ts.
+- Procedural world generation: src/game/simulation.ts createGame generates seeded land, water, coasts, farms, forests, towns, and industry.
+- Smooth coastline: createGame uses coast terrain between water and land; render.ts applies coast tint.
+- Town growth: developAroundStations in src/game/simulation.ts increases development and land values outward from stations.
+- Large map and minimap: createGame uses a 52x52 map; src/ui/App.tsx renders MiniMap with jump navigation.
+- Rail construction and autotiling-ready model: rail, road, station, depot, elevated rail, bridge, and monorail tools exist; rail rendering uses manifest sprites where available and procedural fallbacks otherwise.
+- Level crossings: overlayWithCrossing in src/game/simulation.ts converts rail/road overlap to crossing.
+- Stations and station areas: placeStation creates stations with radius, maintenance, demand, and selection UI.
+- Passenger simulation: growDemand calculates station passenger demand from surrounding development with cannibalisation.
+- Cargo simulation: industrial tiles and purchased land create cargo; ports add cargo-producing industrial shoreline tiles.
+- Land purchase: purchase tool marks purchased land and charges based on land value.
+- In-game clock and speed: Clock exists in src/game/types.ts; tickGame/advanceHour support speed, pause, hours, days, months, leap years, and daily settlement.
+- Economy: src/game/simulation.ts tracks cash, revenue, expenses, loans, interest, construction costs, station maintenance, and rolling stock costs.
+- Train movement, pathfinding, and collision prevention: src/game/pathfinding.ts implements rail pathfinding; advanceTrains interpolates between tiles and blocks occupied next tiles.
+- Train orders: trains have station route arrays and routeIndex in GameState; addTrain creates starter station-to-station service.
+- Transit oriented development: developAroundStations upgrades and zones nearby land over time.
+- Building inspector: src/ui/App.tsx TileView and StationView show random building/station names, people, cargo, demand, and maintenance.
+- Financial UI and loans: src/ui/App.tsx company panel shows revenue, expenses, loans, and Take Loan.
+- Multiplayer with Cloudflare: worker/src/index.ts implements a Worker-routed Durable Object WebSocket room per world with SQLite patch persistence; wrangler.jsonc binds TYCOON_WORLD; src/game/multiplayer.ts provides patch encoding and optional WebSocket client connection.
+- Share links and connected worlds: src/ui/App.tsx creates invite URLs, supports ?world=&seed= joins, and lists previously connected multiplayer worlds.
+- Ports and airports: port and airport tools create procedural shoreline terminals and runway/commercial footprints.
+- Main menu, saves, credits: src/ui/App.tsx implements menu, local save/load, previous worlds, connected worlds, and credits.
+- Tests and instrumentation: src/game/simulation.test.ts covers deterministic generation, starter rail reachability, construction/demand ticking, and special infrastructure; docs/testing-progress.txt records test/build/browser runs.
+- Progress tracking: docs/rendering-progress.txt, docs/simulation-progress.txt, docs/ui-progress.txt, docs/multiplayer-progress.txt, docs/testing-progress.txt, and this audit file exist.
+- Browser testing: Firefox checks were performed for menu, game rendering, share URL, and expanded toolbar; details recorded in docs/testing-progress.txt.
+- Commit: completed in the final "Implement tycoon game v1" commit.
+
+Verification evidence
+
+- npm test: passed with 4 tests on 2026-05-06.
+- npm run build: passed on 2026-05-06.
+- npx wrangler deploy --dry-run --outdir .wrangler-dry-run: passed on 2026-05-06 and reported TYCOON_WORLD Durable Object binding.
+- Firefox: loaded http://127.0.0.1:5173, continued into the game, verified visible isometric map, train, toolbar, minimap, sidebar panels, share link, and expanded special-infrastructure controls.
+
+Residual judgement
+
+This is a complete v1 implementation of the requested game, with pragmatic procedural fallbacks where the spec asks for judgement or where source art labels are imperfect. Exact full sprite autotiling for every elevated/vehicle/port/airport asset remains an art-label refinement, not a blocker for v1 gameplay completion.

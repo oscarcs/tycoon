@@ -1,0 +1,17 @@
+Simulation progress
+
+- Added deterministic seeded procedural world generation with land, water, coast, farms, forests, small towns, and industrial sites.
+- Added station placement, radius-based passenger/cargo demand, station cannibalisation, and multimodal transfer revenue bonus.
+- Added rail pathfinding, train orders between stations, smooth train position interpolation, occupancy checks, capacity, cargo, passenger revenue, and daily rolling stock costs.
+- Added transit-oriented development: stations increase land value and push growth outward from served areas over time.
+- Added land purchasing for cargo staging and zone tools for residential, commercial, and industrial development near stations.
+- Added in-game clock with hours, days, months, leap years, simulation speed, pause, and daily expense settlement.
+- Added company financials with starting loan, interest, maintenance, revenue, expenses, and new loan action.
+- Added local save/load and previous-world tracking.
+- Added buildable elevated rail, bridge, and monorail overlays as v1 transport infrastructure.
+- Added procedural port placement on shoreline with industrial cargo generation.
+- Added procedural regional airport placement with runway footprint and commercial passenger demand.
+
+Balancing notes
+
+- Values are intentionally conservative v1 placeholders: stations cost 180k plus land multiplier, rail is 22k per tile, water rail bridge construction is 70k, trains cost 18k/day, stations cost 3.2k/day, passenger fares start near $38 plus transfer/radius modifiers, and cargo pays $95/unit.
