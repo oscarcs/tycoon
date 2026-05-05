@@ -95,7 +95,7 @@ There should be UI the player can use to track the financials of their company. 
 
 ## Multiplayer
 
-Implement a basic multiplayer system using Cloudflare primitives. Users should be able to send their friends a link to be able to collaborate or compete. Rigid anti-cheat protections aren't warranted at this stage, just something that players can play with their friends.
+Implement a basic multiplayer system using Cloudflare primitives and any sync libraries you think might be required. Users should be able to send their friends a link to be able to collaborate or compete. Rigid anti-cheat protections aren't warranted at this stage, just something that players can play with their friends.
 
 ## Testing
 
@@ -105,8 +105,10 @@ Write tests. Find ways of instrumenting the game to test and balance systems.
 
 Make sure to use seeded procedural randomness everywhere so that a master 'game seed' can be used.
 
-Use a clean modern component library for the UI. Take colour inspiration from the tile palette to make the UI cohesive.
+Use a clean modern component library for the UI. Take colour inspiration from the tile palette to make the UI cohesive with the game sprites.
 
 Create a main menu with saves, previously-connected multiplayer worlds, credits screen, etc.
 
 If there is a gameplay or design decision not specified in this document that you think needs implementing, just go for it. Make sane decisions based on your knowledge of the genre and any online research you want to do. Lean towards realism. Include things that other similar games might not have.
+
+Make git commits as you work.
