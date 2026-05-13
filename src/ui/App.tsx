@@ -3,7 +3,7 @@ import { Anchor, Banknote, Building2, Cable, Factory, HandCoins, Home, MousePoin
 import { connectMultiplayer } from '../game/multiplayer';
 import { applyTool, applyToolLine, createGame, formatMoney, loadGame, saveGame, setSpeed, startMultiplayer, takeLoan, tickGame } from '../game/simulation';
 import { PixiMap } from './PixiMap';
-import { TILE_H, TILE_W, screenToWorldFloat, type Camera } from '../game/geometry';
+import { TILE_H, TILE_W, screenToWorldFloat, worldToScreen, type Camera } from '../game/geometry';
 import type { GameState, Tile, Tool } from '../game/types';
 
 const tools: Array<{ id: Tool; label: string; icon: typeof MousePointer2 }> = [
@@ -78,6 +78,7 @@ export function App() {
   }, [game.selectedId, game.tiles, game.width, game.height]);
   const selectedStation = game.stations.find((station) => station.id === game.selectedId);
   const date = `${game.clock.year}-${String(game.clock.month).padStart(2, '0')}-${String(game.clock.day).padStart(2, '0')} ${String(game.clock.hour).padStart(2, '0')}:00`;
+  const loans = game.company.loans.reduce((sum, loan) => sum + loan.principal, 0);
 
   if (screen === 'credits') {
     return (
@@ -117,34 +118,40 @@ export function App() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <button onClick={() => setScreen('menu')}>Menu</button>
-        <div>
+        <div className="topbar-main">
+          <button onClick={() => setScreen('menu')}>Menu</button>
           <strong>{date}</strong>
-          <span>{formatMoney(game.company.cash)}</span>
+          <div className="speed">
+            {[0, 1, 2, 4].map((speed) => <button className={game.clock.speed === speed ? 'active' : ''} key={speed} onClick={() => setGame((current) => setSpeed(current, speed))}>{speed === 0 ? 'Pause' : `${speed}x`}</button>)}
+          </div>
+          <button aria-label="Undo" disabled={undoStack.length === 0} title="Undo" onClick={() => {
+            setUndoStack((stack) => {
+              const previous = stack[stack.length - 1];
+              if (!previous) return stack;
+              setRedoStack((redo) => [...redo, gameRef.current]);
+              setGame(previous);
+              return stack.slice(0, -1);
+            });
+          }}><Undo2 size={17} /></button>
+          <button aria-label="Redo" disabled={redoStack.length === 0} title="Redo" onClick={() => {
+            setRedoStack((stack) => {
+              const next = stack[stack.length - 1];
+              if (!next) return stack;
+              setUndoStack((undo) => [...undo, gameRef.current]);
+              setGame(next);
+              return stack.slice(0, -1);
+            });
+          }}><Redo2 size={17} /></button>
+          <button onClick={() => { saveGame(game); setGame((current) => ({ ...current, log: ['Game saved locally.', ...current.log].slice(0, 8) })); }}><Save size={17} /> Save</button>
+          <button onClick={() => commitGame((current) => rememberConnectedWorld(startMultiplayer(current)))}><Share2 size={17} /> Share</button>
         </div>
-        <div className="speed">
-          {[0, 1, 2, 4].map((speed) => <button className={game.clock.speed === speed ? 'active' : ''} key={speed} onClick={() => setGame((current) => setSpeed(current, speed))}>{speed === 0 ? 'Pause' : `${speed}x`}</button>)}
+        <div className="finance-strip" aria-label="Company financials">
+          <Metric label="Cash" value={formatMoney(game.company.cash)} strong />
+          <Metric label="Revenue" value={formatMoney(game.company.lifetimeRevenue)} />
+          <Metric label="Expenses" value={formatMoney(game.company.lifetimeExpenses)} />
+          <Metric label="Loans" value={formatMoney(loans)} />
+          <button onClick={() => setGame((current) => takeLoan(current))}><Banknote size={17} /> Take Loan</button>
         </div>
-        <button aria-label="Undo" disabled={undoStack.length === 0} title="Undo" onClick={() => {
-          setUndoStack((stack) => {
-            const previous = stack[stack.length - 1];
-            if (!previous) return stack;
-            setRedoStack((redo) => [...redo, gameRef.current]);
-            setGame(previous);
-            return stack.slice(0, -1);
-          });
-        }}><Undo2 size={17} /></button>
-        <button aria-label="Redo" disabled={redoStack.length === 0} title="Redo" onClick={() => {
-          setRedoStack((stack) => {
-            const next = stack[stack.length - 1];
-            if (!next) return stack;
-            setUndoStack((undo) => [...undo, gameRef.current]);
-            setGame(next);
-            return stack.slice(0, -1);
-          });
-        }}><Redo2 size={17} /></button>
-        <button onClick={() => { saveGame(game); setGame((current) => ({ ...current, log: ['Game saved locally.', ...current.log].slice(0, 8) })); }}><Save size={17} /> Save</button>
-        <button onClick={() => commitGame((current) => rememberConnectedWorld(startMultiplayer(current)))}><Share2 size={17} /> Share</button>
       </header>
 
       <aside className="toolbar">
@@ -153,44 +160,34 @@ export function App() {
         ))}
       </aside>
 
-      <PixiMap
-        game={game}
-        tool={tool}
-        camera={camera}
-        onCameraChange={setCamera}
-        onApplyTool={(selectedTool, x, y) => commitGame((current) => applyTool(current, selectedTool, x, y))}
-        onApplyToolLine={(selectedTool, ax, ay, bx, by) => commitGame((current) => applyToolLine(current, selectedTool, ax, ay, bx, by))}
-      />
-
-      <aside className="side-panel">
-        <section>
-          <h2>Company</h2>
-          <dl>
-            <dt>Revenue</dt><dd>{formatMoney(game.company.lifetimeRevenue)}</dd>
-            <dt>Expenses</dt><dd>{formatMoney(game.company.lifetimeExpenses)}</dd>
-            <dt>Loans</dt><dd>{formatMoney(game.company.loans.reduce((sum, loan) => sum + loan.principal, 0))}</dd>
-          </dl>
-          <button onClick={() => setGame((current) => takeLoan(current))}><Banknote size={17} /> Take Loan</button>
-        </section>
-        <section>
-          <h2>Selection</h2>
-          {selectedStation ? <StationView station={selectedStation} /> : selectedTile ? <TileView tile={selectedTile} /> : <p>No selection.</p>}
-        </section>
-        <section>
-          <h2>Minimap</h2>
+      <section className="play-area">
+        <PixiMap
+          game={game}
+          tool={tool}
+          camera={camera}
+          onCameraChange={setCamera}
+          onApplyTool={(selectedTool, x, y) => commitGame((current) => applyTool(current, selectedTool, x, y))}
+          onApplyToolLine={(selectedTool, ax, ay, bx, by) => commitGame((current) => applyToolLine(current, selectedTool, ax, ay, bx, by))}
+        />
+        <div className="minimap-overlay">
           <MiniMap camera={camera} game={game} onJump={(x, y) => setCamera((current) => cameraForTile(clampMinimapJumpX(x, current.zoom, game), clampMinimapJumpY(y, current.zoom, game), current.zoom))} />
-        </section>
-        <section>
-          <h2>Operations</h2>
-          {game.trains.map((train) => <p key={train.id}>{train.name}: {train.passengers}/{train.capacity} pax, {train.cargo}/{train.cargoCapacity} cargo</p>)}
-        </section>
-        <section className="log">
-          <h2>Log</h2>
+        </div>
+        <SelectionTooltip camera={camera} station={selectedStation} tile={selectedTile} />
+        <section className="log-ribbon" aria-label="Log">
           {game.log.map((entry, index) => <p key={`${entry}-${index}`}>{entry}</p>)}
           {game.multiplayer.inviteUrl && <input readOnly value={game.multiplayer.inviteUrl} />}
         </section>
-      </aside>
+      </section>
     </main>
+  );
+}
+
+function Metric({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <span className={strong ? 'metric metric-strong' : 'metric'}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </span>
   );
 }
 
@@ -207,7 +204,9 @@ function defaultCamera(game: GameState): Camera {
 }
 
 function cameraForTile(x: number, y: number, zoom: number): Camera {
-  const viewportCenterY = typeof window === 'undefined' ? 360 : Math.max(280, (window.innerHeight - 52) / 2);
+  const viewport = typeof document === 'undefined' ? undefined : document.querySelector('.game-viewport');
+  const viewportHeight = viewport instanceof HTMLElement ? viewport.clientHeight : typeof window === 'undefined' ? 720 : window.innerHeight - 88;
+  const viewportCenterY = Math.max(220, viewportHeight / 2);
   return {
     zoom,
     x: -(x - y) * (TILE_W / 2) * zoom,
@@ -227,8 +226,8 @@ function clampMinimapJumpY(y: number, zoom: number, game: GameState): number {
 
 function minimapJumpMargin(zoom: number): number {
   const viewport = typeof document === 'undefined' ? undefined : document.querySelector('.game-viewport');
-  const width = viewport instanceof HTMLElement ? viewport.clientWidth : Math.max(1, window.innerWidth - 374);
-  const height = viewport instanceof HTMLElement ? viewport.clientHeight : Math.max(1, window.innerHeight - 52);
+  const width = viewport instanceof HTMLElement ? viewport.clientWidth : Math.max(1, window.innerWidth - 54);
+  const height = viewport instanceof HTMLElement ? viewport.clientHeight : Math.max(1, window.innerHeight - 88);
   const xRadius = width / (TILE_W * zoom);
   const yRadius = height / (TILE_H * zoom);
   return Math.max(4, Math.ceil((xRadius + yRadius) / 2));
@@ -266,16 +265,51 @@ function ConnectedWorlds({ onOpen }: { onOpen: (world: { worldId: string; seed: 
   return worlds.map((world) => <button key={world.worldId} onClick={() => onOpen(world)}>{world.worldId}</button>);
 }
 
+function SelectionTooltip({ camera, station, tile }: { camera: Camera; station?: GameState['stations'][number]; tile?: Tile }) {
+  const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
+  const selection = station ? { x: station.x, y: station.y } : tile ? { x: tile.x, y: tile.y } : undefined;
+
+  useEffect(() => {
+    const viewport = document.querySelector('.game-viewport');
+    if (!(viewport instanceof HTMLElement)) return undefined;
+    const update = () => setViewportSize({ width: viewport.clientWidth, height: viewport.clientHeight });
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, []);
+
+  if (!selection || viewportSize.width === 0 || viewportSize.height === 0) return null;
+
+  const originX = viewportSize.width / 2 + camera.x;
+  const originY = 40 + camera.y;
+  const screen = worldToScreen(selection.x, selection.y, originX, originY, camera.zoom);
+  const tileHalfWidth = (TILE_W / 2) * camera.zoom;
+  const tileHeight = TILE_H * camera.zoom;
+  const isVisible = screen.x >= -tileHalfWidth
+    && screen.x <= viewportSize.width + tileHalfWidth
+    && screen.y >= -tileHeight
+    && screen.y <= viewportSize.height + tileHeight;
+  if (!isVisible) return null;
+
+  const left = Math.max(10, Math.min(viewportSize.width - 230, screen.x + TILE_W * camera.zoom * 0.35));
+  const top = Math.max(10, Math.min(viewportSize.height - 156, screen.y - 22));
+
+  return (
+    <aside className="selection-tooltip" style={{ left, top }}>
+      {station ? <StationView station={station} /> : tile ? <TileView tile={tile} /> : null}
+    </aside>
+  );
+}
+
 function TileView({ tile }: { tile: GameState['tiles'][number] }) {
   return (
     <dl>
       <dt>Tile</dt><dd>{tile.x}, {tile.y}</dd>
       <dt>Terrain</dt><dd>{tile.terrain}</dd>
-      <dt>Zone</dt><dd>{tile.zone}</dd>
-      <dt>Overlay</dt><dd>{tile.overlay}</dd>
+      <dt>Use</dt><dd>{tile.overlay !== 'none' ? tile.overlay : tile.zone}</dd>
       <dt>Name</dt><dd>{tile.buildingName ?? 'Undeveloped'}</dd>
-      <dt>People</dt><dd>{tile.passengers}</dd>
-      <dt>Cargo</dt><dd>{tile.cargo}</dd>
+      <dt>Load</dt><dd>{tile.passengers} pax / {tile.cargo} cargo</dd>
       <dt>Land</dt><dd>{formatMoney(tile.landValue)}</dd>
     </dl>
   );
@@ -285,8 +319,7 @@ function StationView({ station }: { station: GameState['stations'][number] }) {
   return (
     <dl>
       <dt>Name</dt><dd>{station.name}</dd>
-      <dt>Waiting</dt><dd>{station.passengersWaiting} pax</dd>
-      <dt>Cargo</dt><dd>{station.cargoWaiting}</dd>
+      <dt>Waiting</dt><dd>{station.passengersWaiting} pax / {station.cargoWaiting} cargo</dd>
       <dt>Radius</dt><dd>{station.radius} tiles</dd>
       <dt>Maint.</dt><dd>{formatMoney(station.maintenance)}/day</dd>
     </dl>
@@ -339,8 +372,8 @@ function MiniMap({ camera, game, onJump }: { camera: Camera; game: GameState; on
 
 function drawMinimapViewport(ctx: CanvasRenderingContext2D, game: GameState, camera: Camera): void {
   const viewport = document.querySelector('.game-viewport');
-  const viewportWidth = viewport instanceof HTMLElement ? viewport.clientWidth : Math.max(1, window.innerWidth - 374);
-  const viewportHeight = viewport instanceof HTMLElement ? viewport.clientHeight : Math.max(1, window.innerHeight - 52);
+  const viewportWidth = viewport instanceof HTMLElement ? viewport.clientWidth : Math.max(1, window.innerWidth - 54);
+  const viewportHeight = viewport instanceof HTMLElement ? viewport.clientHeight : Math.max(1, window.innerHeight - 88);
   const originX = viewportWidth / 2 + camera.x;
   const originY = 40 + camera.y;
   const corners = [
