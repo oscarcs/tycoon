@@ -30,6 +30,16 @@ describe('simulation', () => {
     expect(game.clock.tick).toBe(80);
   });
 
+  it('toggles tile inspection off when clicking the selected tile again', () => {
+    let game = createGame('inspect-toggle-test');
+    const tile = game.tiles.find((candidate) => candidate.terrain !== 'water')!;
+    game = applyTool(game, 'inspect', tile.x, tile.y);
+    expect(game.selectedId).toBe(`${tile.x},${tile.y}`);
+
+    game = applyTool(game, 'inspect', tile.x, tile.y);
+    expect(game.selectedId).toBeUndefined();
+  });
+
   it('treats diagonal rail as a first-class 8-way connection', () => {
     let game = createGame('diagonal-rail-test');
     game = applyToolLine(game, 'rail', 30, 30, 34, 34);

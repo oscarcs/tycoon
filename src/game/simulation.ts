@@ -1,6 +1,6 @@
 import { buildingName, stationName } from './names';
 import { Rng } from './random';
-import { linePoints, linePoints8, type TilePoint } from './geometry';
+import { linePoints, linePoints8, tileId, type TilePoint } from './geometry';
 import { findRailPath, tileAt } from './pathfinding';
 import type { GameState, Overlay, Station, Tile, Tool, Train, Zone } from './types';
 
@@ -222,7 +222,8 @@ export function applyTool(state: GameState, tool: Tool, x: number, y: number): G
   if (!tile) return state;
   const rng = new Rng(`${next.seed}:${next.clock.tick}:${x}:${y}`);
   if (tool === 'inspect') {
-    next.selectedId = `${x},${y}`;
+    const id = tileId(x, y);
+    next.selectedId = next.selectedId === id ? undefined : id;
     return next;
   }
   if (tool === 'bulldoze') {

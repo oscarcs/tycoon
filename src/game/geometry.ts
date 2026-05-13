@@ -22,8 +22,8 @@ export function worldToScreen(x: number, y: number, originX: number, originY: nu
 export function screenToWorld(screenX: number, screenY: number, originX: number, originY: number, zoom = 2): TilePoint {
   const point = screenToWorldFloat(screenX, screenY, originX, originY, zoom);
   return {
-    x: Math.floor(point.x),
-    y: Math.floor(point.y),
+    x: Math.floor(point.x + 0.5),
+    y: Math.floor(point.y + 0.5),
   };
 }
 
