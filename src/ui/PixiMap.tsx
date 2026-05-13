@@ -107,6 +107,7 @@ const RAIL_DIRS: Array<{ dx: number; dy: number; dir: Direction }> = [
   { dx: -1, dy: 0, dir: 'NW' },
 ];
 const WATER_BACKGROUND = 0x336688;
+let pixiCatalogPromise: Promise<PixiCatalog> | undefined;
 
 export function PixiMap({ game, tool, camera, onCameraChange, onApplyTool, onApplyToolLine }: PixiMapProps) {
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -139,10 +140,13 @@ export function PixiMap({ game, tool, camera, onCameraChange, onApplyTool, onApp
       host.appendChild(app.canvas);
       appRef.current = app;
       layersRef.current = createPixiLayers(app);
-      catalogRef.current = await loadPixiCatalog();
+      catalogRef.current = await getPixiCatalog();
       if (!cancelled && layersRef.current) renderPixi(app, layersRef.current, game, catalogRef.current, camera, game.selectedId, previewLine, tool);
     }
-    init();
+    void init().catch((error: unknown) => {
+      if (cancelled) return;
+      console.error('Unable to initialize Pixi map', error);
+    });
     return () => {
       cancelled = true;
       appRef.current?.destroy({ removeView: true }, { children: true });
@@ -688,6 +692,14 @@ function isLineTool(tool: Tool): boolean {
 
 function toolLinePoints(tool: Tool, ax: number, ay: number, bx: number, by: number): TilePoint[] {
   return tool === 'road' ? linePoints(ax, ay, bx, by) : linePoints8(ax, ay, bx, by);
+}
+
+function getPixiCatalog(): Promise<PixiCatalog> {
+  pixiCatalogPromise ??= loadPixiCatalog().catch((error: unknown) => {
+    pixiCatalogPromise = undefined;
+    throw error;
+  });
+  return pixiCatalogPromise;
 }
 
 async function loadPixiCatalog(): Promise<PixiCatalog> {
